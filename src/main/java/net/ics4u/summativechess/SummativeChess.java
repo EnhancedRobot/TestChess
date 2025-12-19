@@ -30,6 +30,7 @@ public class SummativeChess {
         // To create a new board
         Board board = new Board();
         
+        
         // Example of the board saved as a string
         
         

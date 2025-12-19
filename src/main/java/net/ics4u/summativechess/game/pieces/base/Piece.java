@@ -32,6 +32,9 @@ public abstract class Piece {
     // The id of the piece, ex. B for bishop or N for knight
     public String id;
     
+    // The board this piece is currently on
+    public Board board;
+    
     // The number of times the piece has moved
     public int timesMoved = 0;
     
@@ -58,7 +61,7 @@ public abstract class Piece {
      Pre: out is non-null
      Post: Appends the positions you can move in the given direction to out
     */
-    public List<BoardPos> moveStraight(Board board, BoardPos dir, List<BoardPos> out, boolean canTakeOther, boolean canTakeSelf) {        
+    private List<BoardPos> moveStraight(Board board, BoardPos dir, List<BoardPos> out, boolean canTakeOther, boolean canTakeSelf) {        
         // The position it is checking
         BoardPos goal = new BoardPos(position);
         // It hasn't collided with anything yet
@@ -116,6 +119,11 @@ public abstract class Piece {
         return out;
     }
     
+    /*
+     Checks if the piece can move to a given position
+    
+     Post: Returns whether or not the piece can move to that position
+     */
     public boolean canMoveToPosition(BoardPos pos, Board board, boolean canTakeOther, boolean canTakeSelf) {
         return canMoveToPosition(pos, board, 
             canTakeOther, canTakeSelf, false);
@@ -204,29 +212,35 @@ public abstract class Piece {
         return canMoveToPosition(pos, board, true, false);
     }
     
-    /* 
+    /*
      Takes the piece
      When overriding, remember to call super.take()
     
      Post: Piece is added to the list of taken pieces
     */
     public void take() {
-        
+        position = null;
+        board.setPiece(position, null);
+        board.capturedPieces.add(this);
     }
     
-    // Moves the piece in a straight line in the given direction
-    // Stops if it collides with a piece
-    // Pre: out is non-null
-    // Post: Appends the positions you can move in the given direction to out
+    /*
+     Moves the piece in a straight line in the given direction
+     Stops if it collides with a piece
+     Pre: out is non-null
+     Post: Appends the positions you can move in the given direction to out
+    */
     public List<BoardPos> moveStraight(Board board, BoardPos dir, List<BoardPos> out) {
         // Return moving straight with the new list
         return moveStraight(board, dir, out, true, false);
     }
     
-    // Moves the piece in a straight line in the given direction
-    // Stops if it collides with a piece
-    // Creates a new list
-    // Post: Creates a new list with the positions you can move to in the given direction
+    /*
+     Moves the piece in a straight line in the given direction
+     Stops if it collides with a piece
+     Creates a new list
+     Post: Creates a new list with the positions you can move to in the given direction
+    */
     public List<BoardPos> moveStraight(Board board, BoardPos dir) {
         // Create a new LinkedList for output
         // Could also be an array list, but we're doing a lot of insertions here

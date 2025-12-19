@@ -58,6 +58,14 @@ public class Board {
         return pieces[pos.y][pos.x];
     }
     
+    /* 
+     Set a piece at a given position
+     Post: Sets the piece at the given position
+    */
+    public void setPiece(BoardPos pos, Piece piece) {
+        pieces[pos.y][pos.x] = piece;
+    }
+    
     public EnPassant getEnPassant(BoardPos pos) {
         // Simple linear search for the postion in the list of en passants
         // The list isn't very big and also isn't sorted, so binary search isn't viable
@@ -190,8 +198,12 @@ public class Board {
         }
     }
     
+    /*
+     Sets the piece at a given position
     
-    void setPieceAt(BoardPos position, Piece piece) {
+     Post: piece is set to be at that position
+    */
+    public void setPieceAt(BoardPos position, Piece piece) {
         // If the piece exists
         if(piece != null) {
             // Set the piece to be at the given position
@@ -199,6 +211,9 @@ public class Board {
             
             // Set the piece's position to be the position
             piece.position = position;
+            
+            // Set the piece's board to be this
+            piece.board = this;
         }
     }
     
