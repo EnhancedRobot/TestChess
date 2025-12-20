@@ -4,7 +4,6 @@
  */
 package main.java.net.ics4u.summativechess.game.pieces.base;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
@@ -41,16 +40,15 @@ public class Pawn extends Piece {
         
         
         // Handle forwards movement
-        // If it's the first turn for the player
-        if(board.turn < board.numPlayers) {
-            
+        // If it's the first move for the pawn
+        if(timesMoved == 0) {
             BoardPos check = new BoardPos(position);
             for(int i = 0; i < firstTurnMoveDistance; i++) {
                 // Step forwards once in the facing direction of the player
                 check.add(board.getFacingDirection(player));
                 
                 // Check if we can move to the position
-                if(canMoveToPosition(check, board, canTakeForwards, false)) {
+                if(canMoveToPosition(check, canTakeForwards, false)) {
                     // Add the location we are checking 
                     moves.add(new BoardPos(check));
                     
@@ -68,7 +66,7 @@ public class Pawn extends Piece {
             BoardPos check = board.getFacingDirection(player).add(position);
             
             // If we can move to the square in front
-            if(canMoveToPosition(check, board, canTakeForwards, false)) {
+            if(canMoveToPosition(check, canTakeForwards, false)) {
                 // Add the location we are checking 
                 moves.add(new BoardPos(check));
             }
@@ -88,12 +86,12 @@ public class Pawn extends Piece {
             right.x += 1;
             
             // If we can move to the diagonal left
-            if(canMoveToPosition(left, board, true, false, !canMoveDiagonal)) {
+            if(canMoveToPosition(left, true, false, !canMoveDiagonal)) {
                 moves.add(left);
             }
             
             // If we can move to the diagonal right
-            if(canMoveToPosition(right, board, true, false, !canMoveDiagonal)) {
+            if(canMoveToPosition(right, true, false, !canMoveDiagonal)) {
                 moves.add(right);
             }
         }
@@ -109,12 +107,12 @@ public class Pawn extends Piece {
             right.y += 1;
             
             // If we can move to the diagonal left
-            if(canMoveToPosition(left, board, true, false, !canMoveDiagonal)) {
+            if(canMoveToPosition(left, true, false, !canMoveDiagonal)) {
                 moves.add(left);
             }
             
             // If we can move to the diagonal right
-            if(canMoveToPosition(right, board, true, false, !canMoveDiagonal)) {
+            if(canMoveToPosition(right, true, false, !canMoveDiagonal)) {
                 moves.add(right);
             }
         }

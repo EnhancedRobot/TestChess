@@ -40,7 +40,7 @@ public class Knight extends Piece {
             BoardPos movingTo = new BoardPos(position).add(pos);
             
             // If the piece can move there
-            if(canMoveToPosition(movingTo, board, true, false)) {
+            if(canMoveToPosition(movingTo, true, false)) {
                 // Add it to the list of places you can move to
                 moves.add(movingTo);
             }

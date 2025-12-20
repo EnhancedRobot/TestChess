@@ -66,6 +66,52 @@ public class Board {
         pieces[pos.y][pos.x] = piece;
     }
     
+    /*
+     Moves a piece (DOES NOT END TURN OR CHECK VICTORY)
+    */
+    public void moveAndTake(Piece piece, BoardPos newLocation) {
+        // Increment the number of times the piece has moved
+        piece.timesMoved += 1;
+        
+        // Gets the piece at the new location
+        Piece pieceAtNewLocation = getPiece(newLocation);
+        
+        // If the piece at the new location exists and is takable, take it
+        if(pieceAtNewLocation != null && pieceAtNewLocation.canBeTaken) {
+            pieceAtNewLocation.take();
+        }
+        
+        // Set the piece's position to be the new position
+        setPiece(newLocation, piece);
+        setPiece(piece.position, null);
+    }
+    
+    /*
+     Ends the players turn
+    */
+    public void endTurn() {
+        // Check for a victory
+        checkForVictory();
+        
+        // 
+    }
+    
+    /*
+     Moves a piece from the old location to the new location
+    */
+    public void moveAndTake(BoardPos oldLocation, BoardPos newLocation) {
+        // Move the piece at the old location to the new location
+        moveAndTake(getPiece(oldLocation), newLocation);
+    }
+    
+    public void checkForVictory() {
+        victoryCondition.isEnded(this);
+    }
+    
+    public void takePieceAt(BoardPos position) {
+        getPiece(position).take();
+    }
+    
     public EnPassant getEnPassant(BoardPos pos) {
         // Simple linear search for the postion in the list of en passants
         // The list isn't very big and also isn't sorted, so binary search isn't viable
@@ -91,6 +137,11 @@ public class Board {
         return tiles[pos.y][pos.x];
     }
     
+    /*
+     Gets the direction a player is facing
+     Note that -y is up
+     Post: Returns the direction the player is facing
+    */
     public BoardPos getFacingDirection(int player) {
         // If playing as white
         if(player == 0) {
@@ -103,8 +154,10 @@ public class Board {
         }
     }
     
-    // Check if a given position is on the board
-    // Post: Returns whether or not the position is on the board 
+    /* 
+     Check if a given position is on the board
+     Post: Returns whether or not the position is on the board 
+    */
     public boolean isInBoard(BoardPos pos) {
         return pos.x >= 0 && pos.x < pieces[0].length && 
                pos.y >= 0 && pos.y < pieces.length;
@@ -143,6 +196,8 @@ public class Board {
     
     /*
      Sets up the pieces based on a array of strings as the input
+    
+     Post: Pieces are added to the board
     */
     public void setUpPieces(BoardPos boardSize, String[][] piecesString) {        
         // Set up the pieces
@@ -157,7 +212,7 @@ public class Board {
             return;
         }
 
-        
+        // For every row
         for(int i = 0; i < boardSize.y; i++) {
             // If the board size is not correct
             if(boardSize.x != piecesString[i].length) {
@@ -168,6 +223,7 @@ public class Board {
                 continue;
             }
         
+            // For every column
             for(int j = 0; j < boardSize.x; j++) {
                 // Get the piece to create as a string and the position
                 String pieceOnTile = piecesString[i][j];
@@ -176,7 +232,7 @@ public class Board {
                 // If there is a piece on the given tile
                 if(pieceOnTile != null) {
                     // Set the piece to the piece we get from the tile
-                    setPieceAt(position, getPiece(pieceOnTile, position));
+                    setPieceAt(position, Piece.getPiece(pieceOnTile, position));
                 }
             } 
         }
@@ -184,6 +240,8 @@ public class Board {
     
     /*
      Sets up the pieces based on a array of strings as the input
+    
+     Post: Tiles are added to the board
     */
     public void setUpTiles(BoardPos boardSize, String[][] tileStrings) {        
         // Set up the pieces
@@ -220,65 +278,7 @@ public class Board {
         }
     }
     
-    /*
-     Gets a piece based on the string representation
-     Can be passed a position to create a position on that tile
-     String should be in the form id,team
-     If it isn't, this will return null and print what went wrong
-     
-     Pre: Piece is a string with a comma splitting id and team, and id is a valid piece id
-     Post: Returns the created piece
-    */
-    public Piece getPiece(String pieceOnTile, BoardPos position) {
-        // If it's trying to get an empty string, return nothing
-        if(pieceOnTile.equals("")) {
-            return null;
-        }
-                
-        // We start with a string 
-        // Split the piece string into two based on the comma
-        String[] split = pieceOnTile.split(",");
-        if(split.length != 2) {
-            System.out.println("Invalid piece: " + pieceOnTile + " (Missing a part?)");
-            return null;
-        }
-        
-        
-        int team;
-        try {
-            // Try to parse the team as a string
-            team = Integer.parseInt(split[1]);
-        } catch(NumberFormatException e) {
-            // If something went wrong with parsing the team number, tell the user what happened
-            System.out.println("Piece at position " + position.toString() + " has invalid team: " + pieceOnTile);
-            // And return
-            return null;
-        }
-        
-        
-        Piece created;
-        
-        // Get the id 
-        String pieceId = split[0];
-        
-        // Get the piece based on the given id
-        // TODO: Maybe rework to add a registry???
-        switch(pieceId) {
-            case "P" -> created = new Pawn(position, team);
-            case "B" -> created = new Bishop(position, team);
-            case "K" -> created = new King(position, team);
-            case "N" -> created = new Knight(position, team);
-            case "Q" -> created = new Queen(position, team);
-            case "R" -> created = new Rook(position, team);
-            default -> {
-                created = null;
-                System.out.println("Invalid piece: " + pieceId + " at " + position.toString());
-            }
-        }
-        
-        return created;
-    }
-    
+
     public void printBoard() {
         for (Piece[] row : pieces) {
             for (Piece piece : row) {

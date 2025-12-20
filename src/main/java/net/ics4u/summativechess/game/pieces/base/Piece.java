@@ -38,6 +38,10 @@ public abstract class Piece {
     // The number of times the piece has moved
     public int timesMoved = 0;
     
+    /*
+     Creates a new piece
+     Post: New piece is created 
+    */
     public Piece(BoardPos position, int owner) {
         this.position = position;
         this.player = owner;
@@ -51,10 +55,18 @@ public abstract class Piece {
     
     
     /*
-     * Called when the player moves to a given position 
+     Called when the player moves to a given position 
     */
     public void onMoveTo(BoardPos position, Board board) {}
     
+    
+    /*
+     Moves this piece to the given position
+     Post: Piece is moved to the position
+    */
+    public void move(BoardPos to) {
+        board.moveAndTake(this, to);
+    }
     /*
      Moves the piece in a straight line in the given direction
      Stops if it collides with a piece
@@ -124,9 +136,8 @@ public abstract class Piece {
     
      Post: Returns whether or not the piece can move to that position
      */
-    public boolean canMoveToPosition(BoardPos pos, Board board, boolean canTakeOther, boolean canTakeSelf) {
-        return canMoveToPosition(pos, board, 
-            canTakeOther, canTakeSelf, false);
+    public boolean canMoveToPosition(BoardPos pos, boolean canTakeOther, boolean canTakeSelf) {
+        return canMoveToPosition(pos, canTakeOther, canTakeSelf, false);
     }
     
     /*
@@ -134,8 +145,7 @@ public abstract class Piece {
         
      Post: Returns whether or not the piece can move to the given position on the board
     */
-    public boolean canMoveToPosition(BoardPos pos, Board board, 
-            boolean canTakeOther, boolean canTakeSelf, boolean requiresTaking) {
+    public boolean canMoveToPosition(BoardPos pos, boolean canTakeOther, boolean canTakeSelf, boolean requiresTaking) {
         // If the position is out of bounds
         if(!board.isInBoard(pos)) {
             // No you can't move there
@@ -207,22 +217,82 @@ public abstract class Piece {
      Checks if you can move to a given position on the board
      Post: Returns whether or not you can move to the position
     */
-    public boolean canMoveToPosition(BoardPos pos, Board board) {
+    public boolean canMoveToPosition(BoardPos pos) {
         // Return canMoveToPosition while being able to take other pieces and not take your own pieces
-        return canMoveToPosition(pos, board, true, false);
+        return canMoveToPosition(pos, true, false);
     }
     
     /*
      Takes the piece
      When overriding, remember to call super.take()
     
-     Post: Piece is added to the list of taken pieces
+     Post: Piece is removed from the board and added to the list of taken pieces
     */
     public void take() {
-        position = null;
         board.setPiece(position, null);
+        position = null;
         board.capturedPieces.add(this);
     }
+    
+     /*
+     Gets a piece based on the string representation
+     Can be passed a position to create a position on that tile
+     String should be in the form id,team
+     If it isn't, this will return null and print what went wrong
+     
+     Pre: Piece is a string with a comma splitting id and team, and id is a valid piece id
+     Post: Returns the created piece
+    */
+    public static Piece getPiece(String pieceOnTile, BoardPos position) {
+        // If it's trying to get an empty string, return nothing
+        if(pieceOnTile.equals("")) {
+            return null;
+        }
+                
+        // We start with a string 
+        // Split the piece string into two based on the comma
+        String[] split = pieceOnTile.split(",");
+        if(split.length != 2) {
+            System.out.println("Invalid piece: " + pieceOnTile + " (Missing a part?)");
+            return null;
+        }
+        
+        
+        int team;
+        try {
+            // Try to parse the team as a string
+            team = Integer.parseInt(split[1]);
+        } catch(NumberFormatException e) {
+            // If something went wrong with parsing the team number, tell the user what happened
+            System.out.println("Piece at position " + position.toString() + " has invalid team: " + pieceOnTile);
+            // And return
+            return null;
+        }
+        
+        
+        Piece created;
+        
+        // Get the id 
+        String pieceId = split[0];
+        
+        // Get the piece based on the given id
+        // TODO: Maybe rework to add a registry???
+        switch(pieceId) {
+            case "P" -> created = new Pawn(position, team);
+            case "B" -> created = new Bishop(position, team);
+            case "K" -> created = new King(position, team);
+            case "N" -> created = new Knight(position, team);
+            case "Q" -> created = new Queen(position, team);
+            case "R" -> created = new Rook(position, team);
+            default -> {
+                created = null;
+                System.out.println("Invalid piece: " + pieceId + " at " + position.toString());
+            }
+        }
+        
+        return created;
+    }
+    
     
     /*
      Moves the piece in a straight line in the given direction
@@ -230,7 +300,7 @@ public abstract class Piece {
      Pre: out is non-null
      Post: Appends the positions you can move in the given direction to out
     */
-    public List<BoardPos> moveStraight(Board board, BoardPos dir, List<BoardPos> out) {
+    public List<BoardPos> moveStraight(BoardPos dir, List<BoardPos> out) {
         // Return moving straight with the new list
         return moveStraight(board, dir, out, true, false);
     }
@@ -241,12 +311,12 @@ public abstract class Piece {
      Creates a new list
      Post: Creates a new list with the positions you can move to in the given direction
     */
-    public List<BoardPos> moveStraight(Board board, BoardPos dir) {
+    public List<BoardPos> moveStraight(BoardPos dir) {
         // Create a new LinkedList for output
         // Could also be an array list, but we're doing a lot of insertions here
         List<BoardPos> out = new LinkedList<>();
 
         // Return moving straight with the new list
-        return moveStraight(board, dir, out);
+        return moveStraight(dir, out);
     }
 }

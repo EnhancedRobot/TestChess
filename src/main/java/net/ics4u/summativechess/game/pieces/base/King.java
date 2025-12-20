@@ -41,7 +41,7 @@ public class King extends Piece {
         for(BoardPos pos : MOVEABLE_POSITIONS) {
             BoardPos movingTo = new BoardPos(position).add(pos);
             // If the piece can move there
-            if(canMoveToPosition(movingTo, board, true, false)) {
+            if(canMoveToPosition(movingTo, true, false)) {
                 // Add it to the list of places you can move to
                 moves.add(movingTo);
             }

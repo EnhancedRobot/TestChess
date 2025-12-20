@@ -4,15 +4,10 @@
  */
 package main.java.net.ics4u.summativechess;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.base.Pawn;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
-import main.java.net.ics4u.summativechess.game.pieces.base.Queen;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 
@@ -32,8 +27,6 @@ public class SummativeChess {
         
         
         // Example of the board saved as a string
-        
-        
         String test = """
                       [R,1|N,1|B,1|K,1|Q,1|B,1|N,1|R,1]
                       [P,1|P,1|P,1|P,1|P,1|P,1|P,1|P,1]

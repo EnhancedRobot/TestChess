@@ -37,7 +37,7 @@ public class Bishop extends Piece {
         // For every direction the rook moves in
         for(BoardPos dir : MOVEMENT_DIRECTIONS) {
             // Move straight in that direction
-            moveStraight(board, dir, moves);
+            moveStraight(dir, moves);
         }
         
         return moves;
