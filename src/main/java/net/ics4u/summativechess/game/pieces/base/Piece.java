@@ -229,7 +229,7 @@ public abstract class Piece {
      Post: Piece is removed from the board and added to the list of taken pieces
     */
     public void take() {
-        board.setPiece(position, null);
+        board.setPieceAt(position, null);
         position = null;
         board.capturedPieces.add(this);
     }

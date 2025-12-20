@@ -15,4 +15,8 @@ public abstract class Tile {
     public ImageIcon image;
     
     public void onMoveTo() {};
+    
+    public static Tile getTile(String tileString) {
+        return null;
+    }
 }

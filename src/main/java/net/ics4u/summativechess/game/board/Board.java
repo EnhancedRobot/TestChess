@@ -58,13 +58,25 @@ public class Board {
         return pieces[pos.y][pos.x];
     }
     
-    /* 
-     Set a piece at a given position
-     Post: Sets the piece at the given position
+    /*
+     Sets the piece at a given position
+    
+     Post: piece is set to be at that position
     */
-    public void setPiece(BoardPos pos, Piece piece) {
-        pieces[pos.y][pos.x] = piece;
+    public void setPieceAt(BoardPos position, Piece piece) {
+        // Set the piece to be at the given position
+        pieces[position.y][position.x] = piece;
+        
+        // If the piece exists            
+        if(piece != null) {
+            // Set the piece's position to be the position
+            piece.position = position;
+            
+            // Set the piece's board to be this
+            piece.board = this;
+        }
     }
+    
     
     /*
      Moves a piece (DOES NOT END TURN OR CHECK VICTORY)
@@ -82,8 +94,8 @@ public class Board {
         }
         
         // Set the piece's position to be the new position
-        setPiece(newLocation, piece);
-        setPiece(piece.position, null);
+        setPieceAt(newLocation, piece);
+        setPieceAt(piece.position, null);
     }
     
     /*
@@ -92,8 +104,6 @@ public class Board {
     public void endTurn() {
         // Check for a victory
         checkForVictory();
-        
-        // 
     }
     
     /*
@@ -135,6 +145,10 @@ public class Board {
     */
     public Tile getTile(BoardPos pos) {
         return tiles[pos.y][pos.x];
+    }
+    
+    public void setTileAt(BoardPos pos, Tile tile) {
+        tiles[pos.y][pos.x] = tile;
     }
     
     /*
@@ -244,37 +258,41 @@ public class Board {
      Post: Tiles are added to the board
     */
     public void setUpTiles(BoardPos boardSize, String[][] tileStrings) {        
-        // Set up the pieces
+        // Set up the tiles
         tiles = new Tile[boardSize.y][boardSize.x];
                 
-        
+        // If the board size is not correct
+        if(boardSize.y != tileStrings.length) {
+            // Tell the user
+            System.out.println("Invalid board: Wrong number of rows in tiles");
+            
+            // Stop the program
+            return;
+        }
+
+        // For every row
         for(int i = 0; i < boardSize.y; i++) {
+            // If the board size is not correct
+            if(boardSize.x != tileStrings[i].length) {
+                // Tell the user
+                System.out.println("Invalid board: Wrong number of columns in row " + i + " for tiles");
+
+                // Stop the row
+                continue;
+            }
+        
+            // For every column
             for(int j = 0; j < boardSize.x; j++) {
                 // Get the piece to create as a string and the position
                 String tileString = tileStrings[i][j];
                 BoardPos position = new BoardPos(j,i);
                 
-                
+                // If there is a piece on the given tile
+                if(tileString != null) {
+                    // Set the piece to the piece we get from the tile
+                    setTileAt(position, Tile.getTile(tileString));
+                }
             } 
-        }
-    }
-    
-    /*
-     Sets the piece at a given position
-    
-     Post: piece is set to be at that position
-    */
-    public void setPieceAt(BoardPos position, Piece piece) {
-        // If the piece exists
-        if(piece != null) {
-            // Set the piece to be at the given position
-            pieces[position.y][position.x] = piece;
-            
-            // Set the piece's position to be the position
-            piece.position = position;
-            
-            // Set the piece's board to be this
-            piece.board = this;
         }
     }
     
