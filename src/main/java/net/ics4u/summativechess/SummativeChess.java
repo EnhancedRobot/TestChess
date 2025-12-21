@@ -38,8 +38,19 @@ public class SummativeChess {
                       [R,0|N,0|B,0|K,0|Q,0|B,0|N,0|P,0]
                       """;
         
+        String tiles = """
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       [   |   |   |   |   |   |   |   ]
+                       """;
+        
         // Setting up the board based on a string
         // I'll add file saving/loading later
-        board.setUpBoard(new BoardPos(8,8), test);
+        board.setUpBoard(new BoardPos(8,8), test, tiles);
     }
 }
