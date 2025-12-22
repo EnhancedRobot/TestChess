@@ -34,7 +34,7 @@ public class Pawn extends Piece {
      Gets the places the piece can move
      Post: Returns the list of places the piece can move to based on the current board state
     */
-    public List<BoardPos> getMoves(Board board) {
+    public List<BoardPos> getMoves() {
         // The list of places the piece can go to
         LinkedList<BoardPos> moves = new LinkedList<>();
         
@@ -121,7 +121,7 @@ public class Pawn extends Piece {
     }
     
     @Override
-    public void onMoveTo(BoardPos position, Board board) {
+    public void onMoveTo(BoardPos position) {
         // Subtract the original position from the new position to get the relative position
         BoardPos moved = new BoardPos(position).subtract(this.position);
         

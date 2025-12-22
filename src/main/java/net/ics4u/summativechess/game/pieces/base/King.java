@@ -33,7 +33,7 @@ public class King extends Piece {
         Post: Returns a list of every position the piece can move to
     */    
     @Override
-    public List<BoardPos> getMoves(Board board) {
+    public List<BoardPos> getMoves() {
         // The list of places the piece can go to
         LinkedList<BoardPos> moves = new LinkedList<>();
         

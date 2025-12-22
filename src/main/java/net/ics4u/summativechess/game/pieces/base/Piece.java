@@ -51,13 +51,13 @@ public abstract class Piece {
      Gets the list of all places the piece can move to
      Post: Returns the list of piece the piece can move to
     */
-    public abstract List<BoardPos> getMoves(Board board);
+    public abstract List<BoardPos> getMoves();
     
     
     /*
      Called when the player moves to a given position 
     */
-    public void onMoveTo(BoardPos position, Board board) {}
+    public void onMoveTo(BoardPos position) {}
     
     
     /*
@@ -73,7 +73,7 @@ public abstract class Piece {
      Pre: out is non-null
      Post: Appends the positions you can move in the given direction to out
     */
-    private List<BoardPos> moveStraight(Board board, BoardPos dir, List<BoardPos> out, boolean canTakeOther, boolean canTakeSelf) {        
+    private List<BoardPos> moveStraight(BoardPos dir, List<BoardPos> out, boolean canTakeOther, boolean canTakeSelf) {        
         // The position it is checking
         BoardPos goal = new BoardPos(position);
         // It hasn't collided with anything yet
@@ -302,7 +302,7 @@ public abstract class Piece {
     */
     public List<BoardPos> moveStraight(BoardPos dir, List<BoardPos> out) {
         // Return moving straight with the new list
-        return moveStraight(board, dir, out, true, false);
+        return moveStraight(dir, out, true, false);
     }
     
     /*

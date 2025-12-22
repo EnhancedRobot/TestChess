@@ -26,7 +26,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<BoardPos> getMoves(Board board) {
+    public List<BoardPos> getMoves() {
         // The list of moves the rook has
         LinkedList<BoardPos> moves = new LinkedList<>();
         

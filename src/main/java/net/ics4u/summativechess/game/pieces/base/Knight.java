@@ -30,7 +30,7 @@ public class Knight extends Piece {
 
     @Override
     // Gets the places the piece can move
-    public List<BoardPos> getMoves(Board board) {
+    public List<BoardPos> getMoves() {
         // The list of places the piece can go to
         LinkedList<BoardPos> moves = new LinkedList<>();
         

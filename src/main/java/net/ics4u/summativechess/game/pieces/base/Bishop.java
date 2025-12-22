@@ -30,7 +30,7 @@ public class Bishop extends Piece {
     @Override
     // Gets the places the piece can move to
     // Post: Returns a list of every position the piece can move to
-    public List<BoardPos> getMoves(Board board) {
+    public List<BoardPos> getMoves() {
         // The list of moves the rook has
         LinkedList<BoardPos> moves = new LinkedList<>();
         
