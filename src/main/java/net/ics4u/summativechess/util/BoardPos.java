@@ -51,8 +51,14 @@ public class BoardPos {
     /*
      Checks if another vector2 is equal to this one
     */
-    public boolean equals(BoardPos other) {
-        return x == other.x && y == other.y;
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof BoardPos ? x == ((BoardPos) other).x && y == ((BoardPos) other).y : false;
+    }
+    
+    @Override
+    public int hashCode() {
+        return x + y;
     }
     
     @Override
