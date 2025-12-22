@@ -44,13 +44,13 @@ public class Board {
     public VictoryCondition victoryCondition;
     
     // A list of the pieces that have been captured so far
-    public ArrayList<Piece> capturedPieces;
+    public ArrayList<Piece> capturedPieces = new ArrayList();
     
     // A list of pieces you can en passant
-    public List<EnPassant> enPassantPieces;
+    public List<EnPassant> enPassantPieces = new ArrayList();;
     
     // The number of times they player has moved this turn
-    public int timesMovedThisTurn;
+    public int timesMovedThisTurn = 0;
     
     // The number of players on the board
     // Defaults to two for normal games
@@ -146,7 +146,7 @@ public class Board {
     }
     
     public void winGame(int winner) {
-        
+        System.out.println("We have a winner: " + winner + "!");
     }
     
     public void takePieceAt(BoardPos position) {
@@ -261,9 +261,6 @@ public class Board {
         setUpTiles(new BoardPos(8,8), tilesString);
         
         victoryCondition = VictoryCondition.getVictoryCondition(victoryConditionString);
-        
-        // Create the enPassant
-        enPassantPieces = new ArrayList<>();
     }
     
     /*
@@ -374,6 +371,11 @@ public class Board {
             // Print a new line
             System.out.println();
         }
+        
+        System.out.println();
+        System.out.println(capturedPieces);
+        System.out.println();
+        
     }
     
     public void onClick(BoardPos pos) {
