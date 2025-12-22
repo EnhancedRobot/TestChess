@@ -6,9 +6,11 @@ package main.java.net.ics4u.summativechess.game.board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.end.VictoryCondition;
+import main.java.net.ics4u.summativechess.game.end.VictoryState;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.base.*;
 import main.java.net.ics4u.summativechess.util.BoardPos;
@@ -28,6 +30,11 @@ public class Board {
     // Use getPiece(), setPiece(), or move() instead
     public Piece[][] pieces;
     
+    // The piece that is currently selected
+    public BoardPos selectedPiece;
+    
+    public List<BoardPos> validMoves;
+    
     // The tiles on the board
     // Access with [y][x]
     // Preferably don't though, unless you have to
@@ -41,6 +48,9 @@ public class Board {
     
     // A list of pieces you can en passant
     public List<EnPassant> enPassantPieces;
+    
+    // The number of times they player has moved this turn
+    public int timesMovedThisTurn;
     
     // The number of players on the board
     // Defaults to two for normal games
@@ -97,14 +107,9 @@ public class Board {
         // Set the piece's position to be the new position
         setPieceAt(newLocation, piece);
         setPieceAt(piece.position, null);
-    }
-    
-    /*
-     Ends the players turn
-    */
-    public void endTurn() {
-        // Check for a victory
-        checkForVictory();
+        
+        // Increment the number of times the player has moved this turn
+        timesMovedThisTurn += 1;
     }
     
     /*
@@ -115,8 +120,33 @@ public class Board {
         moveAndTake(getPiece(oldLocation), newLocation);
     }
     
+    /*
+     Ends the players turn
+    */
+    public void endTurn() {
+        // Increment turn counter
+        turn += 1;
+        
+        // Check for a victory
+        checkForVictory();
+    }
+
+    
+    /*
+     Checks for victory and wins the game if there is a winner
+    */
     public void checkForVictory() {
-        victoryCondition.isEnded(this);
+        VictoryState state = victoryCondition.isEnded(this);
+        
+        int winner = state.getWinner();
+        
+        if(winner >= 0) {
+            winGame(winner);
+        }
+    }
+    
+    public void winGame(int winner) {
+        
     }
     
     public void takePieceAt(BoardPos position) {
@@ -148,6 +178,10 @@ public class Board {
         return tiles[pos.y][pos.x];
     }
     
+    /*
+     Sets the tile at a given position
+     Post: Tile is set 
+   */
     public void setTileAt(BoardPos pos, Tile tile) {
         tiles[pos.y][pos.x] = tile;
     }
@@ -178,7 +212,13 @@ public class Board {
                pos.y >= 0 && pos.y < pieces.length;
     }
     
+    /*
+     Sets up the board
+     Post: Board is set up for the game to start
+    */
     public void setUpBoard(BoardPos boardSize, String boardInput, String tilesInput) {
+        String victoryConditionString = "EveryRoyal";
+        
         // Remove all whitespace
         boardInput = boardInput.replaceAll("\\s+", "");
         tilesInput = tilesInput.replaceAll("\\s+", "");
@@ -219,6 +259,8 @@ public class Board {
         
         // Set up the tiles
         setUpTiles(new BoardPos(8,8), tilesString);
+        
+        victoryCondition = VictoryCondition.getVictoryCondition(victoryConditionString);
         
         // Create the enPassant
         enPassantPieces = new ArrayList<>();
@@ -331,6 +373,27 @@ public class Board {
             
             // Print a new line
             System.out.println();
+        }
+    }
+    
+    public void onClick(BoardPos pos) {
+        if(selectedPiece == null) {
+            if(getPiece(pos) != null) {
+                selectedPiece = pos;
+                
+                validMoves = getPiece(pos).getMoves();
+                
+                System.out.println(validMoves);
+                
+                System.out.println(selectedPiece);
+            }
+        } else {      
+            if(validMoves.contains(pos)) {
+                moveAndTake(selectedPiece, pos);
+                endTurn();
+                
+                printBoard();
+            }
         }
     }
 }

@@ -12,4 +12,15 @@ import main.java.net.ics4u.summativechess.game.board.Board;
  */
 public abstract class VictoryCondition {
     public abstract VictoryState isEnded(Board board);
+    
+    public static VictoryCondition getVictoryCondition(String id) {
+        switch(id) {
+            case "EveryRoyal" -> {return new CaptureEveryRoyal();}
+            case "AnyRoyal" -> {return new CaptureAnyRoyal();}
+            default -> {
+                System.out.println("Invalid victory condition: " + id);
+                return null;
+            }
+        }
+    }
 }
