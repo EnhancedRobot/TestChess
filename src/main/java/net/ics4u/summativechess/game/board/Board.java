@@ -108,6 +108,11 @@ public class Board {
         setPieceAt(piece.position, null);
         setPieceAt(newLocation, piece);
         
+        
+        if(getTile(newLocation) != null) {
+            getTile(newLocation).onMoveTo();
+        }
+        
         // Increment the number of times the player has moved this turn
         timesMovedThisTurn += 1;
     }
