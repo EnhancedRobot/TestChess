@@ -37,9 +37,6 @@ public class Queen extends Piece {
         for(BoardPos dir : MOVEMENT_DIRECTIONS) {
             // Move straight in that direction
             moveStraight(dir, moves);
-            
-            System.out.println(dir);
-            System.out.println(moves);
         }
         
         return moves;
