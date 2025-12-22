@@ -28,7 +28,7 @@ public class VictoryState {
         // For each team
         for(int i = 0; i < hasLost.length; i++) {
             // If that team is still in the game
-            if(hasLost[i]) {
+            if(!hasLost[i]) {
                 // If there's no current winner
                 if(winner == -2) {
                     // We have a winner
