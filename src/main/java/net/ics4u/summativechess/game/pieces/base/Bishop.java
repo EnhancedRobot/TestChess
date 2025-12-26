@@ -15,6 +15,10 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class Bishop extends Piece {
+    /*
+     Creates a new piece with the given position and owner
+     Post: New piece is created
+    */
     public Bishop(BoardPos position, int owner) {
         super(position, owner);
         
@@ -24,8 +28,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    // Gets the places the piece can move to
-    // Post: Returns a list of every position the piece can move to
+    /*
+     Gets the places the piece can move to
+     Post: Returns a list of every position the piece can move to
+    */
     public List<Move> getMoves() {
         // The list of moves the rook has
         LinkedList<Move> moves = new LinkedList<>();

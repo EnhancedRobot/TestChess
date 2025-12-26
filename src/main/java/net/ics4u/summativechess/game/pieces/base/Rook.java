@@ -15,13 +15,21 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class Rook extends Piece {
+    /*
+     Creates a new piece with the given position and owner
+     Post: New piece is created
+    */
     public Rook(BoardPos position, int owner) {
         super(position, owner);
         
         // Set the rook's id to R
         id = "R";
     }
-
+    
+    /*
+     Gets the places the piece can move to
+     Post: Returns a list of every position the piece can move to
+    */
     @Override
     public List<Move> getMoves() {
         // The list of moves the rook has

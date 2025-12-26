@@ -294,6 +294,10 @@ public abstract class Piece {
         return created;
     }
     
+    /*
+     Converts the piece to a string
+     Post: Returns the piece as a string
+    */
     @Override
     public String toString() {
         return id + player;

@@ -21,7 +21,11 @@ public class Knight extends Piece {
                                                         new BoardPos(2, -1), new BoardPos(1, -2),
                                                         new BoardPos(2, 1), new BoardPos(1, 2),
                                                         new BoardPos(-2, 1), new BoardPos(-1, 2)};
-
+    
+    /*
+     Creates a new piece with the given position and owner
+     Post: New piece is created
+    */
     public Knight(BoardPos position, int owner) {
         super(position, owner);
         
@@ -29,8 +33,11 @@ public class Knight extends Piece {
         id = "N";
     }
 
+    /*
+     Gets the places the piece can move to
+     Post: Returns a list of every position the piece can move to
+    */
     @Override
-    // Gets the places the piece can move
     public List<Move> getMoves() {
         // The list of places the piece can go to
         LinkedList<Move> moves = new LinkedList<>();

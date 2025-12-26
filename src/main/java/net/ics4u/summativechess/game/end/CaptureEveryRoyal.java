@@ -12,7 +12,10 @@ import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
  * @author joshu
  */
 public class CaptureEveryRoyal extends VictoryCondition {
-
+    /*
+     Get the victory state condition for the given board
+     Post: Returns the victtory state for the board
+    */
     @Override
     public VictoryState isEnded(Board board) {
         // Create the list of who has lost

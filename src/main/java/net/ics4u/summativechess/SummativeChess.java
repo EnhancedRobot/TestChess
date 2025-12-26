@@ -42,17 +42,6 @@ public class SummativeChess {
                       [R,0|N,0|B,0|K,0|Q,0|B,0|N,0|R,0]
                       """;
         
-        test = """
-                      [R,1|N,1|B,1|K,1|Q,1|B,1|N,1|R,1]
-                      [P,1|P,1|P,1|P,1|P,1|P,1|P,1|P,1]
-                      [   |   |   |   |   |   |   |   ]
-                      [   |   |   |Q,1|   |   |   |   ]
-                      [   |   |   |   |   |   |   |   ]
-                      [   |   |   |   |   |   |   |   ]
-                      [P,0|P,0|P,0|   |P,0|P,0|P,0|P,0]
-                      [R,0|   |   |K,0|   |   |   |R,0]
-                      """;
-        
         String tiles = """
                        [   |   |   |   |   |   |   |   ]
                        [   |   |   |   |   |   |   |   ]
@@ -70,7 +59,7 @@ public class SummativeChess {
         
         Scanner scanner = new Scanner(System.in);
         
-        board.printBoard();
+        System.out.print(board.toString());
         
         while(true) {
             String move = scanner.nextLine();

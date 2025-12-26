@@ -11,8 +11,16 @@ import main.java.net.ics4u.summativechess.game.board.Board;
  * @author joshu
  */
 public abstract class VictoryCondition {
+    /*
+     Get the victory state condition for the given board
+     Post: Returns the victtory state for the board
+    */
     public abstract VictoryState isEnded(Board board);
     
+    /*
+     Gets the vicotry condition based on a given victory condition id
+     Post: Returns a new victory condition, or null if there is no victory condition with that id 
+    */
     public static VictoryCondition getVictoryCondition(String id) {
         switch(id) {
             case "EveryRoyal" -> {return new CaptureEveryRoyal();}

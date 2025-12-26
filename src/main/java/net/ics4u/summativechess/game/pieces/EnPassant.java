@@ -12,17 +12,31 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class EnPassant {
+    // The location on the board at which this en passant is
     public BoardPos location;
+    
+    // The list of pieces that would be taken by the en passant
     public Piece[] pieces;
     
+    // The list of piece ids that can take the en passant
     public String[] canTake;
     
+    /*
+     Creates a new en passant with multiple pieces
+    
+     Post: Creates a new en passant
+    */
     public EnPassant(BoardPos location, Piece[] pieces, String[] canTake) {
         this.location = location;
         this.pieces = pieces;
         this.canTake = canTake;
     }
     
+    /*
+     Creates a new en passant with just one piece
+    
+     Post: Creates a new en passant
+    */
     public EnPassant(BoardPos location, Piece piece, String[] canTake) {
         this.location = location;
         this.pieces = new Piece[]{piece};
@@ -53,6 +67,11 @@ public class EnPassant {
         }
     }
     
+    /*
+     Checks if this en passant is takeable by a given piece
+    
+     Post: Returns whether or not the taking piece can take this en passant
+    */
     public boolean canBeTaken(Piece taking) {        
         // Linear search for the id of the taking piece in the pieces that can take the en passant
         // This could be done with a binary search if we force the user to sort

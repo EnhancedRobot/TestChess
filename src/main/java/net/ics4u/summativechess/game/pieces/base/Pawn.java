@@ -17,11 +17,19 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class Pawn extends Piece {
-    
+    // The distance the pawn can move on its first turn
     public int firstTurnMoveDistance = 2;
+    
+    // Whether or not the pawn can take forwards
     public boolean canTakeForwards = false;
-    public boolean canMoveDiagonal = false;    
-
+    
+    // Whether or not the pawn can move diagonally without having to take
+    public boolean canMoveDiagonal = false; 
+    
+    /*
+     Creates a new piece with the given position and owner
+     Post: New piece is created
+    */
     public Pawn(BoardPos position, int owner) {
         super(position, owner);
                 

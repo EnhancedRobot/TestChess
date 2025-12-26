@@ -9,8 +9,13 @@ package main.java.net.ics4u.summativechess.game.end;
  * @author joshu
  */
 public class VictoryState {
+    // A list of the teams that have lost
     public Boolean[] hasLost;
     
+    /*
+     Creates a new victory state
+     Post: Victory state is created
+    */
     public VictoryState(Boolean[] hasLost) {
         this.hasLost = hasLost;
     }

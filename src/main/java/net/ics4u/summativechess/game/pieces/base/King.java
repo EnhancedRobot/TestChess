@@ -17,6 +17,10 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class King extends Piece {
+    /*
+     Creates a new piece with the given position and owner
+     Post: New piece is created
+    */
     public King(BoardPos position, int owner) {
         super(position, owner);
         

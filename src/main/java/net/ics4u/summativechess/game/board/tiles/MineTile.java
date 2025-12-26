@@ -11,7 +11,11 @@ import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
  * @author joshu
  */
 public class MineTile extends Tile {
+    /*
+     Creates a new mine tile
     
+     Post: A new mine tile is created 
+    */
     public MineTile() {
         super();
         
@@ -19,6 +23,12 @@ public class MineTile extends Tile {
         id = "M";
     }
     
+    
+    /*
+     Called when a piece moves onto the tile
+    
+     Post: Deletes the piece and this tile
+    */
     @Override
     public void onMoveTo(Piece piece) {        
         // Take the piece when a player moves there

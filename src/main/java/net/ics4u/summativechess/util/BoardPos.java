@@ -25,9 +25,19 @@ public class BoardPos {
                                                 new BoardPos(-1, -1), new BoardPos(1, 1), 
                                                 new BoardPos(1, -1), new BoardPos(-1, 1)};    
     
+    // The x position
     public int x;
+    
+    // The y position
     public int y;
     
+    /*
+     Adds another boardpos to this
+     Same as x += other.x; y += other.y
+     Returns itself
+    
+     Post: Adds the other board pos
+    */
     public BoardPos add(BoardPos toAdd) {
         // Add x and y
         x += toAdd.x;
@@ -37,6 +47,13 @@ public class BoardPos {
         return this;
     }
     
+    /*
+     Subtracts another boardpos to this
+     Same as x -= other.x; y -= other.y
+     Returns itself
+    
+     Post: Subtracts the other board pos
+    */
     public BoardPos subtract(BoardPos toSubtract) {
         // Sutract x and y
         x -= toSubtract.x;
@@ -46,6 +63,13 @@ public class BoardPos {
         return this;
     }
     
+    /*
+     Multiplies both x and y by a given amount
+     Same as x *= amount; y *= amount;
+     Returns itself
+    
+     Post: multiplies the board pos
+    */
     public BoardPos multiply(int amount) {
         // Multiply x and y by the amount
         x *= amount;
@@ -56,7 +80,9 @@ public class BoardPos {
     }
     
     /* 
-        Creates a new Vector2 based off another
+     Creates a new BoardPos based off another
+    
+     Post: returns a new BoardPos
     */
     public BoardPos(BoardPos clone) {
         // Copy the cloned x and y
@@ -65,7 +91,9 @@ public class BoardPos {
     }
     
     /*
-        Gets the maximum distance in either direction
+     Gets the maximum distance in either direction
+    
+     Post: Returns the maximum distance
     */
     public int maxDistance() {
         // Return the maximum distance in either direction
@@ -74,27 +102,32 @@ public class BoardPos {
     
     /*
      Checks if another vector2 is equal to this one
+    
+     Post: Retursn whether or not the other object is the same object
     */
     @Override
     public boolean equals(Object other) {
         return other instanceof BoardPos ? x == ((BoardPos) other).x && y == ((BoardPos) other).y : false;
     }
-    
-    @Override
-    public int hashCode() {
-        return x + y;
-    }
+
     
     @Override
     /*
      Returns it as a string
      (x, y)
+    
      Post: Returns the vector as a string
     */
     public String toString() {
         return "(" + x + ", " + y + ")";
     }
     
+    /*
+     Creates a new board pos at the given x y coordinates
+     Note that -y is up
+    
+     Post: Creates a new board pos
+    */
     public BoardPos(int x, int y) {
         this.x = x;
         this.y = y;

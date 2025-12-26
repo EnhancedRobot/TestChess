@@ -32,8 +32,16 @@ public abstract class Tile {
     // The unique id of this tile
     public String id;
     
+    /*
+     Called when a piece moves onto the tile
+    */
     public void onMoveTo(Piece piece) {};
     
+    /*
+     Gets a new tile based on the given id and position
+    
+     Post: Returns a new tile
+    */
     public static Tile getTile(String tileString, BoardPos position) {
         // If it's trying to get an empty string, return nothing
         if(tileString.equals("")) {

@@ -92,6 +92,10 @@ public class Board {
     
     /*
      Moves a piece (DOES NOT END TURN OR CHECK VICTORY)
+     Takes the piece on the tile it moves to and also en passant if applicable
+     Also increments the number of times moved for the turn
+    
+     Post: Piece is moved to the new location, piece on the tile is taken and en passant is taken if applicable
     */
     public void moveAndTake(Piece piece, BoardPos newLocation) {
         // Increment the number of times the piece has moved
@@ -129,6 +133,8 @@ public class Board {
     
     /*
      Moves a piece from the old location to the new location
+    
+     Post: Piece is moved to the new location and removed from the old one 
     */
     public void moveAndTake(BoardPos oldLocation, BoardPos newLocation) {
         // Move the piece at the old location to the new location
@@ -137,6 +143,8 @@ public class Board {
     
     /*
      Ends the players turn
+    
+     Post: Turn is ended, and victory is checked
     */
     public void endTurn() {
         // Increment turn counter
@@ -149,6 +157,8 @@ public class Board {
     
     /*
      Checks for victory and wins the game if there is a winner
+     
+     Post: Victory is checked, if there is a winner that winner is output
     */
     public void checkForVictory() {
         VictoryState state = victoryCondition.isEnded(this);
@@ -160,14 +170,30 @@ public class Board {
         }
     }
     
+    /*
+     Wins the game for a given player
+     
+     Post: Prints the winner, because I NEED UI
+    */
     public void winGame(int winner) {
         System.out.println("We have a winner: " + winner + "!");
     }
     
+    /* 
+     Takes the piece at a position on the board
+    
+     Post: Piece at the given position is taken
+    */
     public void takePieceAt(BoardPos position) {
         getPiece(position).take();
     }
     
+    /*
+     Gets the En Passant for a given position
+     Returns null if there is none
+    
+     Post: Returns the en passant for the position or null
+    */
     public EnPassant getEnPassant(BoardPos pos) {
         // Simple linear search for the postion in the list of en passants
         // The list isn't very big and also isn't sorted, so binary search isn't viable
@@ -374,32 +400,51 @@ public class Board {
     }
     
 
-    public void printBoard() {
+    /*
+     Gets the board as a string
+     
+     Post: returns the board as a string
+    */
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+        
         for (Piece[] row : pieces) {
+            // Add the left edge
+            out.append('[');
+            
             for (Piece piece : row) {
                 // Print the piece's id
                 if(piece != null) {
-                    // Print the piece id and player id
-                    System.out.print(piece.id);
-                    System.out.print(piece.player);
+                    // Add the piece id and player id
+                    out.append(piece.id);
+                    out.append(',');
+                    out.append(piece.player);
                 } else {
                     // Add a spacer
-                    System.out.print("  ");
+                    out.append("   ");
                 }
                 
-                System.out.print(",");
+                out.append("|");
             }
+                  
+            // Replace the last | with a ] for the right edge
+            out.replace(out.length()-1, out.length(), "]");
             
-            // Print a new line
-            System.out.println();
+            // Add a new line
+            out.append('\n');
         }
         
-        System.out.println();
-        System.out.println(capturedPieces);
-        System.out.println();
-        
+        // Return the created string
+        return out.toString();
     }
     
+    /*
+     Gets the move to a given position is the valid moves
+     This is temp code, should be moved elsewhere when we implement UI
+    
+     Post: returns the move to a given position
+    */
     public Move getMoveTo(BoardPos pos) {
         for(Move move : validMoves) {
             if(move.end.equals(pos)) {
@@ -410,6 +455,11 @@ public class Board {
         return null;
     }
     
+    /*
+     Temp code for handling a click at a given position
+    
+     Post: Does movement and selection
+    */
     public void onClick(BoardPos pos) {
         int currentPlayer = turn % numPlayers;
         
@@ -440,7 +490,11 @@ public class Board {
                 
                 endTurn();
                 
-                printBoard();
+                System.out.print(toString());
+
+                System.out.println();
+                System.out.println(capturedPieces);
+                System.out.println();                
             }
         }
     }
