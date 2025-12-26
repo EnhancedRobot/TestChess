@@ -12,7 +12,7 @@ import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.end.VictoryCondition;
 import main.java.net.ics4u.summativechess.game.end.VictoryState;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
-import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
+import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
 import main.java.net.ics4u.summativechess.game.pieces.base.*;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 

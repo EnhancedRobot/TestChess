@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
-import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
-import main.java.net.ics4u.summativechess.game.pieces.Moves.PawnDoubleForwardsMove;
+import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
+import main.java.net.ics4u.summativechess.game.pieces.moves.PawnDoubleForwardsMove;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
