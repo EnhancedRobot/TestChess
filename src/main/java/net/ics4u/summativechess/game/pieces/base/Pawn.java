@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -34,9 +35,9 @@ public class Pawn extends Piece {
      Gets the places the piece can move
      Post: Returns the list of places the piece can move to based on the current board state
     */
-    public List<BoardPos> getMoves() {
+    public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<BoardPos> moves = new LinkedList<>();
+        LinkedList<Move> moves = new LinkedList<>();
         
         
         // Handle forwards movement
@@ -50,7 +51,7 @@ public class Pawn extends Piece {
                 // Check if we can move to the position
                 if(canMoveToPosition(check, canTakeForwards, false)) {
                     // Add the location we are checking 
-                    moves.add(new BoardPos(check));
+                    moves.add(getMoveFor(check));
                     
                     // If there is a piece there, then break because we've encountered something that blocks us
                     if (board.getPiece(check) != null) {
@@ -68,7 +69,7 @@ public class Pawn extends Piece {
             // If we can move to the square in front
             if(canMoveToPosition(check, canTakeForwards, false)) {
                 // Add the location we are checking 
-                moves.add(new BoardPos(check));
+                moves.add(getMoveFor(check));
             }
         }
         
@@ -90,12 +91,12 @@ public class Pawn extends Piece {
             
             // If we can move to the diagonal left
             if(canMoveToPosition(left, true, false, !canMoveDiagonal)) {
-                moves.add(left);
+                moves.add(getMoveFor(left));
             }
             
             // If we can move to the diagonal right
             if(canMoveToPosition(right, true, false, !canMoveDiagonal)) {
-                moves.add(right);
+                moves.add(getMoveFor(right));
             }
         }
         
@@ -111,12 +112,12 @@ public class Pawn extends Piece {
             
             // If we can move to the diagonal left
             if(canMoveToPosition(left, true, false, !canMoveDiagonal)) {
-                moves.add(left);
+                moves.add(getMoveFor(left));
             }
             
             // If we can move to the diagonal right
             if(canMoveToPosition(right, true, false, !canMoveDiagonal)) {
-                moves.add(right);
+                moves.add(getMoveFor(right));
             }
         }
         
@@ -124,9 +125,9 @@ public class Pawn extends Piece {
     }
     
     @Override
-    public void onMoveTo(BoardPos position) {
+    public void onMove(Move move) {
         // Subtract the original position from the new position to get the relative position
-        BoardPos moved = new BoardPos(position).subtract(this.position);
+        BoardPos moved = new BoardPos(move.end).subtract(this.position);
         
         // Get the distance travelled
         int distance = Math.max(Math.abs(moved.x), Math.abs(moved.y));

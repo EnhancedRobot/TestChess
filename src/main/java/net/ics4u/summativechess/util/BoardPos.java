@@ -65,6 +65,14 @@ public class BoardPos {
     }
     
     /*
+        Gets the maximum distance in either direction
+    */
+    public int maxDistance() {
+        // Return the maximum distance in either direction
+        return Math.max(Math.abs(x), Math.abs(y));
+    }
+    
+    /*
      Checks if another vector2 is equal to this one
     */
     @Override

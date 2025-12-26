@@ -12,6 +12,7 @@ import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.end.VictoryCondition;
 import main.java.net.ics4u.summativechess.game.end.VictoryState;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.game.pieces.base.*;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
@@ -33,7 +34,7 @@ public class Board {
     // The piece that is currently selected
     public BoardPos selectedPiece;
     
-    public List<BoardPos> validMoves;
+    public List<Move> validMoves;
     
     // The tiles on the board
     // Access with [y][x]
@@ -390,6 +391,16 @@ public class Board {
         
     }
     
+    public Move getMoveTo(BoardPos pos) {
+        for(Move move : validMoves) {
+            if(move.end.equals(pos)) {
+                return move;
+            }
+        }
+        
+        return null;
+    }
+    
     public void onClick(BoardPos pos) {
         int currentPlayer = turn % numPlayers;
         
@@ -410,8 +421,10 @@ public class Board {
             }
         }
         if(selectedPiece != null) {
-            if(validMoves.contains(pos)) {
-                moveAndTake(selectedPiece, pos);
+            Move move = getMoveTo(pos);
+            
+            if(move != null) {
+                move.doMove();
                 
                 selectedPiece = null;
                 validMoves = null;

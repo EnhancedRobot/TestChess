@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.CastleMove;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -27,9 +29,9 @@ public class King extends Piece {
         Post: Returns a list of every position the piece can move to
     */    
     @Override
-    public List<BoardPos> getMoves() {
+    public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<BoardPos> moves = new LinkedList<>();
+        LinkedList<Move> moves = new LinkedList<>();
         
         // For every direction
         for(BoardPos pos : BoardPos.DIRECTIONS) {
@@ -37,7 +39,7 @@ public class King extends Piece {
             // If the piece can move there
             if(canMoveToPosition(movingTo, true, false)) {
                 // Add it to the list of places you can move to
-                moves.add(movingTo);
+                moves.add(getMoveFor(movingTo));
             }
         }
         
@@ -47,10 +49,18 @@ public class King extends Piece {
             
             // For every direction
             for (BoardPos direction : BoardPos.DIRECTIONS) {
+                boolean checking = true;
+                
                 // While still in the board
-                while(board.isInBoard(check)) {
+                while(checking) {                    
                     // Move forward in the direction
                     check.add(direction);
+                    
+                    // If the position is out of the board
+                    if(!board.isInBoard(check)) {
+                        // stop
+                        break;
+                    }
                     
                     // Get the tile at the position
                     Tile tile = board.getTile(check);
@@ -67,18 +77,19 @@ public class King extends Piece {
                     // If there is a piece on the tile
                     if(onTile != null) {
                         // If the piece on the tile is a rook that has never moved
-                        if(onTile.id.equals("R") && onTile.timesMoved == 0) {
+                        if(onTile.id.equals("R") && onTile.player == player && onTile.timesMoved == 0) {
                             // Add the castling
                             
-                            // Get two spaces in that direction
-                            BoardPos goTo = new BoardPos(direction);
-                            goTo = goTo.multiply(2);
+                            // Get the position for the rook
+                            BoardPos rookPos = new BoardPos(direction);
+                            rookPos.add(position);
                             
-                            // Add the current position to get the point you would castle to
-                            goTo.add(position);
+                            // Get the position one more in that direction for the king's position
+                            BoardPos kingPos = new BoardPos(rookPos);
+                            kingPos.add(direction);
                             
                             // Add the position to the list of possible moves
-                            moves.add(goTo);
+                            moves.add(new CastleMove(position, kingPos, this, board, onTile, rookPos));
                         }
                         
                         // We've hit something, so break
@@ -90,18 +101,5 @@ public class King extends Piece {
              
         // Return the list of places this piece can go to
         return moves;
-    }
-    
-    
-    @Override
-    public void onMoveTo(BoardPos position) {
-        // Subtract the original position from the new position to get the relative position
-        BoardPos moved = new BoardPos(position).subtract(this.position);
-        
-        // If we moved two tiles (that's a castle... Probably.)
-        // This may be a problem I need to solve
-        if(moved.maxDistance() == 2) {
-            
-        }
     }
 }

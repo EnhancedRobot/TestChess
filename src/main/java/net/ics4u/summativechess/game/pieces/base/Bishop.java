@@ -7,6 +7,7 @@ package main.java.net.ics4u.summativechess.game.pieces.base;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -25,9 +26,9 @@ public class Bishop extends Piece {
     @Override
     // Gets the places the piece can move to
     // Post: Returns a list of every position the piece can move to
-    public List<BoardPos> getMoves() {
+    public List<Move> getMoves() {
         // The list of moves the rook has
-        LinkedList<BoardPos> moves = new LinkedList<>();
+        LinkedList<Move> moves = new LinkedList<>();
         
         // For every direction the rook moves in
         for(BoardPos dir : BoardPos.DIAGONALS) {

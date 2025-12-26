@@ -7,6 +7,7 @@ package main.java.net.ics4u.summativechess.game.pieces.base;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -30,9 +31,9 @@ public class Knight extends Piece {
 
     @Override
     // Gets the places the piece can move
-    public List<BoardPos> getMoves() {
+    public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<BoardPos> moves = new LinkedList<>();
+        LinkedList<Move> moves = new LinkedList<>();
         
         // For every position in moveable positions
         for(BoardPos pos : MOVEABLE_POSITIONS) {
@@ -42,7 +43,7 @@ public class Knight extends Piece {
             // If the piece can move there
             if(canMoveToPosition(movingTo, true, false)) {
                 // Add it to the list of places you can move to
-                moves.add(movingTo);
+                moves.add(getMoveFor(movingTo));
             }
         }
         

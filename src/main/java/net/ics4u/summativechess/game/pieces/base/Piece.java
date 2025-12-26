@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -51,13 +52,13 @@ public abstract class Piece {
      Gets the list of all places the piece can move to
      Post: Returns the list of piece the piece can move to
     */
-    public abstract List<BoardPos> getMoves();
+    public abstract List<Move> getMoves();
     
     
     /*
-     Called when the player moves to a given position 
+     Called when the player moves
     */
-    public void onMoveTo(BoardPos position) {}
+    public void onMove(Move move) {}
     
     
     /*
@@ -73,7 +74,7 @@ public abstract class Piece {
      Pre: out is non-null
      Post: Appends the positions you can move in the given direction to out
     */
-    private List<BoardPos> moveStraight(BoardPos dir, List<BoardPos> out, boolean canTakeOther, boolean canTakeSelf) {        
+    private List<Move> moveStraight(BoardPos dir, List<Move> out, boolean canTakeOther, boolean canTakeSelf) {        
         // The position it is checking
         BoardPos goal = new BoardPos(position);
         // It hasn't collided with anything yet
@@ -99,7 +100,7 @@ public abstract class Piece {
             // If the piece on that space is null (There's nothing there)
             if(piece == null) {
                 // Add the space to the output
-                out.add(new BoardPos(goal));
+                out.add(getMoveFor(goal));
             } else {
                 // Otherwise, we've collided with something
                 notCollided = false;
@@ -115,13 +116,13 @@ public abstract class Piece {
                     // If you can take your own pieces
                     if(canTakeSelf) {
                         // Add the position to the list of outputs
-                        out.add(new BoardPos(goal));
+                        out.add(getMoveFor(goal));
                     }
                 } else {
                     // If you collided with an enemy and you can take their pieces
                     if(canTakeOther) {
                         // Add it to the list of outputs
-                        out.add(new BoardPos(goal));
+                        out.add(getMoveFor(goal));
                     }
                 }
             }
@@ -298,6 +299,14 @@ public abstract class Piece {
         return id + player;
     }
     
+    /*
+     Gets a simple move from the current position to the given position
+     Post: Returns a newly created move to the given position
+    */
+    public Move getMoveFor(BoardPos to) {
+        return new Move(position, to, this, board);
+    }
+    
     
     /*
      Moves the piece in a straight line in the given direction
@@ -305,7 +314,7 @@ public abstract class Piece {
      Pre: out is non-null
      Post: Appends the positions you can move in the given direction to out
     */
-    public List<BoardPos> moveStraight(BoardPos dir, List<BoardPos> out) {
+    public List<Move> moveStraight(BoardPos dir, List<Move> out) {
         // Return moving straight with the new list
         return moveStraight(dir, out, true, false);
     }
@@ -316,10 +325,10 @@ public abstract class Piece {
      Creates a new list
      Post: Creates a new list with the positions you can move to in the given direction
     */
-    public List<BoardPos> moveStraight(BoardPos dir) {
+    public List<Move> moveStraight(BoardPos dir) {
         // Create a new LinkedList for output
         // Could also be an array list, but we're doing a lot of insertions here
-        List<BoardPos> out = new LinkedList<>();
+        List<Move> out = new LinkedList<>();
 
         // Return moving straight with the new list
         return moveStraight(dir, out);
