@@ -30,6 +30,17 @@ public class EnPassant {
     }
     
     /*
+     Takes the en passant if the given piece can
+    */
+    public void takeIfPossible(Piece piece) {
+        // If the piece can take the en passant
+        if(canBeTaken(piece)) {
+            // Take the en passant
+            take();
+        }
+    }
+    
+    /*
      Takes every piece in the en passant
      
      Post: Every piece is taken 

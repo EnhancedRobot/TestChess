@@ -109,6 +109,15 @@ public class Board {
         setPieceAt(piece.position, null);
         setPieceAt(newLocation, piece);
         
+        // Get the en passant for the position
+        EnPassant enPassant = getEnPassant(newLocation);
+        
+        // If there is a en passant for the tile
+        if(enPassant != null) {
+            // Take it if it's takeable by this piece
+            enPassant.takeIfPossible(piece);
+        }
+        
         
         if(getTile(newLocation) != null) {
             getTile(newLocation).onMoveTo(piece);

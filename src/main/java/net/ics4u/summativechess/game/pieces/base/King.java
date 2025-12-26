@@ -44,57 +44,60 @@ public class King extends Piece {
         }
         
         // Handle castling
-        if(timesMoved == 0) {
+        if(timesMoved != 0) {
+            return moves;
+        }
+        
+            
+         // For every direction
+        for (BoardPos direction : BoardPos.DIRECTIONS) {
             BoardPos check = new BoardPos(position);
             
-            // For every direction
-            for (BoardPos direction : BoardPos.DIRECTIONS) {
-                boolean checking = true;
-                
-                // While still in the board
-                while(checking) {                    
-                    // Move forward in the direction
-                    check.add(direction);
-                    
-                    // If the position is out of the board
-                    if(!board.isInBoard(check)) {
-                        // stop
-                        break;
+            boolean checking = true;
+
+            // While still in the board
+            while (checking) {
+                // Move forward in the direction
+                check.add(direction);
+
+                // If the position is out of the board
+                if (!board.isInBoard(check)) {
+                    // stop
+                    break;
+                }
+
+                // Get the tile at the position
+                Tile tile = board.getTile(check);
+
+                // If the tile is non-traversable
+                if (tile != null && !tile.isTraversable) {
+                    // Break
+                    break;
+                }
+
+                // Get the piece on the tile
+                Piece onTile = board.getPiece(check);
+
+                // If there is a piece on the tile
+                if (onTile != null) {
+                    // If the piece on the tile is a rook that has never moved
+                    if (onTile.id.equals("R") && onTile.player == player && onTile.timesMoved == 0) {
+                        // Add the castling
+
+                        // Get the position for the rook
+                        BoardPos rookPos = new BoardPos(direction);
+                        rookPos.add(position);
+
+                        // Get the position one more in that direction for the king's position
+                        BoardPos kingPos = new BoardPos(rookPos);
+                        kingPos.add(direction);
+
+                        // Add the position to the list of possible moves
+                        moves.add(new CastleMove(position, kingPos, this, board, onTile, rookPos));
                     }
-                    
-                    // Get the tile at the position
-                    Tile tile = board.getTile(check);
-                    
-                    // If the tile is non-traversable
-                    if(tile != null && !tile.isTraversable) {
-                        // Break
-                        break;
-                    }
-                    
-                    // Get the piece on the tile
-                    Piece onTile = board.getPiece(check);
-                    
-                    // If there is a piece on the tile
-                    if(onTile != null) {
-                        // If the piece on the tile is a rook that has never moved
-                        if(onTile.id.equals("R") && onTile.player == player && onTile.timesMoved == 0) {
-                            // Add the castling
-                            
-                            // Get the position for the rook
-                            BoardPos rookPos = new BoardPos(direction);
-                            rookPos.add(position);
-                            
-                            // Get the position one more in that direction for the king's position
-                            BoardPos kingPos = new BoardPos(rookPos);
-                            kingPos.add(direction);
-                            
-                            // Add the position to the list of possible moves
-                            moves.add(new CastleMove(position, kingPos, this, board, onTile, rookPos));
-                        }
-                        
-                        // We've hit something, so break
-                        break;
-                    }
+
+                    // We've hit something, so break
+                    break;
                 }
             }
         }

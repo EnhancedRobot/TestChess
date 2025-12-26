@@ -9,6 +9,7 @@ import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.Moves.Move;
+import main.java.net.ics4u.summativechess.game.pieces.Moves.PawnDoubleForwardsMove;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -19,9 +20,7 @@ public class Pawn extends Piece {
     
     public int firstTurnMoveDistance = 2;
     public boolean canTakeForwards = false;
-    public boolean canMoveDiagonal = false;
-    public static final String[] CAN_TAKE_EN_PASSANT = new String[]{"P"};
-    
+    public boolean canMoveDiagonal = false;    
 
     public Pawn(BoardPos position, int owner) {
         super(position, owner);
@@ -51,7 +50,7 @@ public class Pawn extends Piece {
                 // Check if we can move to the position
                 if(canMoveToPosition(check, canTakeForwards, false)) {
                     // Add the location we are checking 
-                    moves.add(getMoveFor(check));
+                    moves.add(new PawnDoubleForwardsMove(position, check, this, board));
                     
                     // If there is a piece there, then break because we've encountered something that blocks us
                     if (board.getPiece(check) != null) {
@@ -122,28 +121,5 @@ public class Pawn extends Piece {
         }
         
         return moves;
-    }
-    
-    @Override
-    public void onMove(Move move) {
-        // Subtract the original position from the new position to get the relative position
-        BoardPos moved = new BoardPos(move.end).subtract(this.position);
-        
-        // Get the distance travelled
-        int distance = Math.max(Math.abs(moved.x), Math.abs(moved.y));
-        
-        // If the pawn moved more than one square in the facing direction   
-        if(distance > 1 && moved.equals(board.getFacingDirection(player).multiply(distance))) {
-            // Go forwards until you reach the end
-            for(int i = 0; i < distance; i++) {
-                // Add the point it passed to enPassant
-                
-                // Get the position to add to the en passant
-                BoardPos enPassantPos = board.getFacingDirection(player).multiply(i).add(this.position);
-                
-                // Add the en passant
-                board.enPassantPieces.add(new EnPassant(enPassantPos, this, CAN_TAKE_EN_PASSANT));
-            }
-        }
     }
 }
