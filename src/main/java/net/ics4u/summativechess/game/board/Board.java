@@ -4,10 +4,15 @@
  */
 package main.java.net.ics4u.summativechess.game.board;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.end.VictoryCondition;
 import main.java.net.ics4u.summativechess.game.end.VictoryState;
@@ -15,6 +20,8 @@ import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
 import main.java.net.ics4u.summativechess.game.pieces.base.*;
 import main.java.net.ics4u.summativechess.util.BoardPos;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -57,10 +64,6 @@ public class Board {
     // Defaults to two for normal games
     public int numPlayers = 2;
     
-    // Gets whether or not a boolean variation is active
-    public boolean isVariationActive(String variation) {
-        return true;
-    }
     
     /* 
      Gets a piece at a given position
@@ -110,7 +113,8 @@ public class Board {
         }
         
         // Set the piece's position to be the new position
-        setPieceAt(piece.position, null);
+        // Use piece.board.setPieceAt to allow for multiple boards, in theory
+        piece.board.setPieceAt(piece.position, null);
         setPieceAt(newLocation, piece);
         
         // Get the en passant for the position
@@ -260,8 +264,12 @@ public class Board {
                pos.y >= 0 && pos.y < pieces.length;
     }
     
+    public void readFile(String filepath) {
+        
+    }
+    
     /*
-     Sets up the board
+     Sets up the board based off the board size, pieces, and tiles
      Post: Board is set up for the game to start
     */
     public void setUpBoard(BoardPos boardSize, String boardInput, String tilesInput) {
