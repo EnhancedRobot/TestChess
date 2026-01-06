@@ -47,5 +47,9 @@ public class CastleMove extends Move {
         
         // Add the en passant at the start position to take the king and rook
         board.enPassantPieces.add(new EnPassant(start, new Piece[]{movingPiece, rook}, new String[]{"*"}));
+        
+        // Call the onMove()s for the king and rook
+        rook.onMove(this);
+        movingPiece.onMove(this);
     }
 }

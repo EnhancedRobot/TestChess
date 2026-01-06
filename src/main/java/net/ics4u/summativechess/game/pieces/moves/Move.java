@@ -25,6 +25,10 @@ public class Move {
     // The board this move takes place on
     public Board board;
     
+    // Whether or not this move involved a take.
+    // Note, this only changes after the move is executed.
+    public boolean isTake;
+    
     /*
      Creates a new move
      Post: Move is created with the given start, end, piece, and board
@@ -39,6 +43,10 @@ public class Move {
         
         // Set the board
         this.board = board;
+                
+        // If the piece at the new location exists and is takable, this move would be a taking move, otherwise not
+        // Basically if not null, set to true otherwise set to false
+        isTake = board.getPiece(end) != null;
     }
     /*
      Does the move
@@ -46,6 +54,8 @@ public class Move {
     */
     public void doMove() {
         board.moveAndTake(movingPiece, end);
+        
+        movingPiece.onMove(this);
     }
     
     /*
