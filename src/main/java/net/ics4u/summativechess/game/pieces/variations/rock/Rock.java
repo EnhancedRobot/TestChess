@@ -4,6 +4,7 @@
  */
 package main.java.net.ics4u.summativechess.game.pieces.variations.rock;
 
+import java.util.ArrayList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
 import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
@@ -15,6 +16,11 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  */
 public class Rock extends Piece {
 
+    /*
+     Get the list of places this piece can move
+    
+     Post: Returns a new empty list, as there is no places the rock can move ever. 
+    */
     public Rock(BoardPos position, int owner) {
         super(position, owner);
                 
@@ -25,9 +31,14 @@ public class Rock extends Piece {
         canBeTaken = false;
     }
 
+    /*
+     Get the list of places this piece can move
+    
+     Post: Returns a new empty list, as there is no places the rock can move ever. 
+    */
     @Override
     public List<Move> getMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+        // Return an empty list
+        return new ArrayList<>();
+    } 
 }
