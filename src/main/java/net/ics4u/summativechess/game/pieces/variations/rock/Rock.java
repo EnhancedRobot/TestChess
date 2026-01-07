@@ -17,9 +17,9 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
 public class Rock extends Piece {
 
     /*
-     Get the list of places this piece can move
+     Creates a new Rock
     
-     Post: Returns a new empty list, as there is no places the rock can move ever. 
+     Post: Rock is created
     */
     public Rock(BoardPos position, int owner) {
         super(position, owner);
