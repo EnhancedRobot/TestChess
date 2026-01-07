@@ -64,6 +64,11 @@ public class Example extends Piece implements ActiveAbility {
     
     
     
+    /*
+     Called when the piece moves
+    
+     Post: Takes the piece in front of this one
+    */
     @Override
     public void onMove(Move move) {
         // Take the piece in front of you
