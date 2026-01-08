@@ -6,9 +6,6 @@ package main.java.net.ics4u.summativechess;
 
 import java.util.Scanner;
 import main.java.net.ics4u.summativechess.game.board.Board;
-import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
-import main.java.net.ics4u.summativechess.game.pieces.base.Pawn;
-import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
 import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
