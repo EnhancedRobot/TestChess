@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.6" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="3"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="ReturnButton" min="-2" pref="57" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane3" min="-2" pref="514" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="553" max="-2" attributes="0"/>
+                  <Component id="jScrollPane4" min="-2" pref="514" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" min="-2" pref="251" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jScrollPane4" pref="50" max="32767" attributes="0"/>
+                          <Component id="ReturnButton" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="579" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane2" min="-2" pref="366" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jScrollPane3" min="-2" pref="50" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="BoardTable">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+              <Table columnCount="10" rowCount="10">
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value="8"/>
+                  <Data value="7"/>
+                  <Data value="6"/>
+                  <Data value="5"/>
+                  <Data value="4"/>
+                  <Data value="3"/>
+                  <Data value="2"/>
+                  <Data value="1"/>
+                  <Data value="   "/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value="a"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value="b"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value="c"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value="d"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value="e"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value="f"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value="g"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value=""/>
+                  <Data value=" "/>
+                  <Data value="h"/>
+                </Column>
+                <Column editable="false" title="" type="java.lang.Object">
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                  <Data value="   "/>
+                </Column>
+              </Table>
+            </Property>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+              <TableColumnModel selectionModel="3">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+              </TableColumnModel>
+            </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+            <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="66" green="66" red="66" type="rgb"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
+            <Property name="rowHeight" type="int" value="55"/>
+            <Property name="rowSelectionAllowed" type="boolean" value="false"/>
+            <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="99" green="99" red="99" type="rgb"/>
+            </Property>
+            <Property name="selectionMode" type="int" value="0"/>
+            <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+              <JTableSelectionModel selectionMode="0"/>
+            </Property>
+            <Property name="showGrid" type="boolean" value="true"/>
+            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+              <TableHeader reorderingAllowed="true" resizingAllowed="false"/>
+            </Property>
+          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+          </AccessibilityProperties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()&#xa;{&#xa;    @Override&#xa;&#xa;    public Component prepareRenderer (TableCellRenderer renderer, int rowIndex, int columnIndex){&#xa;        Component componenet = super.prepareRenderer(renderer, rowIndex, columnIndex);&#xa;&#xa;        Object value = getModel().getValueAt(rowIndex,columnIndex);&#xa;&#xa;        if(columnIndex &lt;= 10){&#xa;&#xa;            if(value.equals(&quot;&quot;)) // no space&#xa;            {&#xa;                componenet.setBackground(Color.BLACK);&#xa;                //componenet.setForeground(Color.BLACK);&#xa;&#xa;            }else if(value.equals(&quot; &quot;)){ // one spaces&#xa;                componenet.setBackground(Color.WHITE);&#xa;                //componenet.setForeground(Color.BLACK);&#xa;            }else {&#xa;                componenet.setBackground(LBROWN);&#xa;                componenet.setForeground(Color.WHITE);&#xa;            }&#xa;&#xa;        }&#xa;&#xa;        return componenet;&#xa;    }&#xa;&#xa;}&#xa;&#xa;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="MoveListArea">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane3">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="CapPieces2">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="Units captured go here. EX:&quot; K: 2, Q: 1, P: 5 &quot;"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="CapPieaces1">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="Units captured go here. EX:&quot; K: 2, Q: 1, P: 5 &quot;"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="ReturnButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Quit"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ReturnButtonActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>

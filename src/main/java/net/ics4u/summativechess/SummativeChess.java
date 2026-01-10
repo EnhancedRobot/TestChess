@@ -6,6 +6,7 @@ package main.java.net.ics4u.summativechess;
 
 import java.util.Scanner;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
 import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
@@ -20,7 +21,8 @@ public class SummativeChess {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        test();
+        new BoardFrame();
+        //test();
     }
     
     public static void test() {
