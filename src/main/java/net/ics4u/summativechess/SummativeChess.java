@@ -9,6 +9,12 @@ import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
 import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,8 +27,11 @@ public class SummativeChess {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new BoardFrame();
-        //test();
+        // Run the console test mode so board.txt loading (your part) is executed
+        test();
+
+        // UI mode (leave this here for later, but keep it commented while demonstrating your work)
+        // new BoardFrame();
     }
     
     public static void test() {
@@ -30,7 +39,7 @@ public class SummativeChess {
         Board board = new Board(new ActiveVariations());
         
         
-        // Example of the board saved as a string
+        /* Example of the board saved as a string
         String test = """
                       [R,1|N,1|B,1|K,1|Q,1|B,1|N,1|R,1]
                       [P,1|P,1|P,1|P,1|P,1|P,1|P,1|P,1]
@@ -56,6 +65,9 @@ public class SummativeChess {
         // Setting up the board based on a string
         // I'll add file saving/loading later
         board.setUpBoard(new BoardPos(8,8), test, tiles);
+        */
+        
+        board.loadFromFile("src/main/assets/boardsetups/Chess.board");
         
         Scanner scanner = new Scanner(System.in);
         

@@ -4,6 +4,7 @@
  */
 package main.java.net.ics4u.summativechess.game.board;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
@@ -255,8 +256,22 @@ public class Board {
                pos.y >= 0 && pos.y < pieces.length;
     }
     
-    public void readFile(String filepath) {
+    public void loadFromFile(String filepath) {
+        // Define data
+        BoardFileData data;
         
+        // Try to load board
+        try {
+            data = Loading.loadBoardFromFile(filepath);
+        } catch (IOException ex) {
+            System.getLogger(Board.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            
+            // Stop the code
+            return;
+        }
+        
+        // Set up the board based on the given size, pieces, and tiles
+        setUpBoard(data.size, data.pieces, data.tiles);
     }
     
     public Board(ActiveVariations variations) {
