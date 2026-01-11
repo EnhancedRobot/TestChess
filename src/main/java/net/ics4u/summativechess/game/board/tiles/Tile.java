@@ -62,3 +62,138 @@ public abstract class Tile {
         return created;
     }
 }
+
+public interface PowerUp{
+
+    //this applies the poweru p to a piece
+    void apply(Piece piece);
+
+    //returns the name of the power up
+    String getName();
+}
+
+public class ExtraMovePowerUp implements PowerUp{
+
+    @Override
+    public void apply(Piece piece){
+    //gives the piece an extra move
+    piece.addExtraMove(); 
+    }
+   
+@Override
+    public String getName(){
+    return "Extra Move";
+    }
+}
+
+public class ShieldPowerUp implements PowerUp{
+
+    @Override
+    public void apply(Piece piece){
+        piece.activateShield();
+    }
+    @Override
+    public String getName(){
+        return "shield";
+    }
+}
+
+public class PromotionPowerUp implements PowerUp{
+
+    @Override
+    public void apply(Piece piece){
+        piece.promoteToQueen();
+    }
+
+    @Override
+    public String getNmae();{
+        return "Promotion to Queen";
+    }
+}
+    
+public class Tile{
+
+    //power up on this tile
+    private powerUp powerUp;
+
+    //check if the tile has a power up
+    public boolean  hasPowerUp(){
+        return powerUp != null;
+        }
+
+    //place a power up on the tile
+    public void setPowerUp(PowerUp powerUp){
+        this.powerUp = powerUp;
+    }
+
+    //remove the power up after use
+    public void removePowerUp(){
+        powerUp = null;
+    }
+
+    //handle power up when a piece lands on the tile
+    public void handlePoweUp(Piece piece){
+        if (!hasPowerUp()){
+            //no power up, do nothing
+            return;
+        }
+
+        //asking player if they wat to use the power up
+        System.out.println("You landed on a power up: " + powerUp.getName());
+        System.out.println("Do you want to use it? (yes/no): ");
+
+        Scaner input = new Scanner(System.in);
+        String choice = input.nextLine();
+
+        //apply power up if only player says yes
+        if (choice.equalsIgnoreCase("yes")){
+            powerUp.apply(piece);
+            removePowerUp();
+            System.out.println("Power up applied!");
+        }else{
+            System.out.println("power up ignored");
+        }
+    }
+}
+
+public class Piece{
+
+    private int extraMoves = 0;
+    private boolean shielded = false;
+    private String type = "pawn"; //pawn, rook, knight, bishop, queen
+
+    //adds one extra move
+    public void addExtraMove(){
+        extraMoves++;
+    }
+     public int getExtraMoves(){
+         return extraMoves;
+     }
+
+    //shield methods
+    public void activateShield(){
+        shielded = true;
+    }
+
+    public boolea isSheilded(){
+        return shielded;
+    }
+
+    //promotion method
+    public void promoteToQueen(){
+        type = "Queen";
+    }
+
+    public String getType(){
+        return type;
+    }
+}
+
+//after moving the piece to the tile 
+tile.handlePowerUp(piece);
+//and
+tile.setPowerUp(new ShieldPowerUp());
+//and
+tile.setPowerUp(new PromotionPowerUp());
+//and
+tile.setPowerUp(new ExtraMovePowerUp());
