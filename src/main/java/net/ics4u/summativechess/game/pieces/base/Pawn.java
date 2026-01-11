@@ -102,7 +102,9 @@ public class Pawn extends Piece {
     }
     
     /*
-     
+     Gets the diagonals the pawn can move to
+    
+     Post: Adds the potential diagonals to the list of moves 
     */
     public void getDiagonals(List<Move> moves) {
         // Forwards
@@ -151,6 +153,22 @@ public class Pawn extends Piece {
             if(canMoveToPosition(right, true, false, !board.variations.pawnCanMoveDiagonal)) {
                 moves.add(getMoveFor(right));
             }
+        }
+    }
+    
+    @Override
+    public void onMove(Move move) {
+        // If the square in front is off the board
+        if(board.isInBoard(board.getFacingDirection(player).add(position))) {
+            // Promote
+            // Only to queen for now while we wait for UI
+            
+            // Create a new Queen
+            Queen queen = new Queen(position, player);
+            
+            
+            // Set the piece on the tile to be a queen
+            board.setPieceAt(position, queen);
         }
     }
 }
