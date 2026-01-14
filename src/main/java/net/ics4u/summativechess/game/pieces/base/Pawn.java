@@ -122,10 +122,7 @@ public class Pawn extends Piece {
             // Get the right diagonal
             BoardPos right = new BoardPos(forwards).add(position);
             right.x += 1;
-            
-            System.out.println(left);
-            System.out.println(right);
-            
+                        
             // If we can move to the diagonal left
             if(canMoveToPosition(left, true, false, !board.variations.pawnCanMoveDiagonal)) {
                 moves.add(getMoveFor(left));
