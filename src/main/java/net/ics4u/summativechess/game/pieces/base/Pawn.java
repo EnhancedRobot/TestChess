@@ -26,6 +26,9 @@ public class Pawn extends Piece {
                 
         // Set the pawn's id to P
         id = "P";
+        
+        // Set the image icon for the piece
+        setImage();
     }
     
     @Override
