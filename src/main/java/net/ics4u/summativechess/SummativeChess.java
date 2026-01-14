@@ -28,10 +28,12 @@ public class SummativeChess {
      */
     public static void main(String[] args) {
         // Run the console test mode so board.txt loading (your part) is executed
-        test();
+        //test();
 
         // UI mode (leave this here for later, but keep it commented while demonstrating your work)
         // new BoardFrame();
+        
+       testBoardFrame();
     }
     
     public static void test() {
@@ -54,5 +56,10 @@ public class SummativeChess {
             
             board.onClick(click);
         }
+    }
+    
+    public static void testBoardFrame()
+    {
+        var boardFrame = new BoardFrame();
     }
 }

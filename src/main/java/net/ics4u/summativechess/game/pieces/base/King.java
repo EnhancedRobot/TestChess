@@ -26,6 +26,9 @@ public class King extends Piece {
         
         // Set the id to k
         id = "K";
+        
+        // Set the image icon for the piece
+        setImage();
     }
 
     /*

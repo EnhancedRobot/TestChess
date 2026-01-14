@@ -15,45 +15,48 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class Knight extends Piece {
-    
+
     // The positions the knight can move to
     public static final BoardPos[] MOVEABLE_POSITIONS = {new BoardPos(-2, -1), new BoardPos(-1, -2),
-                                                        new BoardPos(2, -1), new BoardPos(1, -2),
-                                                        new BoardPos(2, 1), new BoardPos(1, 2),
-                                                        new BoardPos(-2, 1), new BoardPos(-1, 2)};
-    
+        new BoardPos(2, -1), new BoardPos(1, -2),
+        new BoardPos(2, 1), new BoardPos(1, 2),
+        new BoardPos(-2, 1), new BoardPos(-1, 2)};
+
     /*
      Creates a new piece with the given position and owner
      Post: New piece is created
-    */
+     */
     public Knight(BoardPos position, int owner) {
         super(position, owner);
-        
+
         // Set the knight's id to N (King is K, this is standard)
         id = "N";
+
+        // Set the image icon for the piece
+        setImage();
     }
 
     /*
      Gets the places the piece can move to
      Post: Returns a list of every position the piece can move to
-    */
+     */
     @Override
     public List<Move> getMoves() {
         // The list of places the piece can go to
         LinkedList<Move> moves = new LinkedList<>();
-        
+
         // For every position in moveable positions
-        for(BoardPos pos : MOVEABLE_POSITIONS) {
+        for (BoardPos pos : MOVEABLE_POSITIONS) {
             // Get the actual position on the board you'd move to
             BoardPos movingTo = new BoardPos(position).add(pos);
-            
+
             // If the piece can move there
-            if(canMoveToPosition(movingTo, true, false)) {
+            if (canMoveToPosition(movingTo, true, false)) {
                 // Add it to the list of places you can move to
                 moves.add(getMoveFor(movingTo));
             }
         }
-        
+
         return moves;
     }
 }

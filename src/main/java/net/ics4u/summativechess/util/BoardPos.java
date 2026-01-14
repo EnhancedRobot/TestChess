@@ -131,5 +131,7 @@ public class BoardPos {
     public BoardPos(int x, int y) {
         this.x = x;
         this.y = y;
+        
+        
     }
 }

@@ -213,7 +213,7 @@ public class Board {
     */
     public Tile getTile(BoardPos pos) {
         return tiles[pos.y][pos.x];
-    }
+    } 
     
     /*
      Sets the tile at a given position

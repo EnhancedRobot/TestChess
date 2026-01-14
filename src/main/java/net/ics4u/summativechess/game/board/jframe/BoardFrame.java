@@ -3,30 +3,105 @@ package main.java.net.ics4u.summativechess.game.board.jframe;
 import java.awt.*;
 import java.awt.Component;
 import javax.swing.table.*;
+import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
+import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
+import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
- * @author liame
+ * @author liame Purpose: Board that the player sees and interacts with
  */
 public class BoardFrame extends javax.swing.JFrame {
+
     public static final Color LBROWN = new Color(153, 102, 0); // Declare color brown
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BoardFrame.class.getName());
-    
-    
+    private final Board board;
+
     /**
      * Creates new form BoardFrame
      */
     public BoardFrame() {
         initComponents();
-        
+
+        // To create a new board
+        this.board = new Board(new ActiveVariations());
+
+        // Load the board file
+        this.board.loadFromFile("src/main/assets/boardsetups/Chess.board");
+
+        // Override the table cell renderers with a special image renderer
+        for (int i = 0; i < 10; i++) {
+            BoardTable.getColumnModel().getColumn(i).setCellRenderer(new ImageCellRenderer());
+        }
+
+        // Draw the initial board
+        drawBoard();
+
         setVisible(true);
     }
 
+    // Call method to sync visual board
+    private void drawBoard() {
+        // Loop over all 8 rows
+        for (int row = 0; row < 8; row++) {
+            // Loop over all 8 columns
+            for (int column = 0; column < 8; column++) {
+                // Get the BoardPos at this row and column
+                BoardPos pos = new BoardPos(row, column);
+
+                // Get the piece at this row and column position
+                Piece piece = this.board.getPiece(pos);
+
+                // Check if a piece was found at this position
+                if (piece == null) {
+                    // Clear the board at this position since there is no piece
+                    clearBoardAtPos(pos);
+                } else {
+                    // Draw the piece at it's position
+                    drawPieceOnBoard(piece);
+                }
+            }
+        }
+    }
+
+    private void drawPieceOnBoard(Piece piece) {
+        BoardTable.setValueAt(piece.image, piece.position.y + 1, piece.position.x + 1);
+    }
+
+    private void clearBoardAtPos(BoardPos pos) {
+        BoardTable.setValueAt(null, pos.y + 1, pos.x + 1);
+
+    }
+
+    /*
+    // If the color should be white, return true, else false
+    private Boolean colorCheck(BoardPos pos) {
+
+        int row = pos.y % 2; // When 0 or and even number, returns 0, else 1
+        int col = pos.x % 2; // Same here
+
+        if (row == 0) {
+            if (col == 0) {
+                return true;
+            } else if (col == 1) {
+                return false;
+            }
+        } else if (row == 1) {
+            if (col == 0) {
+                return false;
+            } else if (col == 1) {
+                return true;
+            }
+        }
+
+        return true; // Should never catch this
+    }
+     */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,33 +114,78 @@ public class BoardFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         BoardTable = new javax.swing.JTable()
         {
-            @Override
+            private class Position {
+                private int x;
+                private int y;
 
+            }
+
+            private Boolean colorCheckRender(Position pos) {
+
+                int row = pos.y % 2; // When 0 or and even number, returns 0, else 1
+                int col = pos.x % 2; // Same here
+
+                if (row == 0) {
+                    if (col == 0) {
+                        return true;
+                    } else if (col == 1) {
+                        return false;
+                    }
+                } else if (row == 1) {
+                    if (col == 0) {
+                        return false;
+                    } else if (col == 1) {
+                        return true;
+                    }
+                }
+
+                return true; // Should never catch this
+            }
+
+            @Override
             public Component prepareRenderer (TableCellRenderer renderer, int rowIndex, int columnIndex){
                 Component componenet = super.prepareRenderer(renderer, rowIndex, columnIndex);
 
                 Object value = getModel().getValueAt(rowIndex,columnIndex);
 
+                Position pos = new Position();
+                pos.x = columnIndex;
+                pos.y = rowIndex;
+
                 if(columnIndex <= 10){
 
-                    if(value.equals("")) // no space
+                    if(colorCheckRender(pos)) // no space
                     {
-                        componenet.setBackground(Color.BLACK);
-                        //componenet.setForeground(Color.BLACK);
-
-                    }else if(value.equals(" ")){ // one spaces
                         componenet.setBackground(Color.WHITE);
-                        //componenet.setForeground(Color.BLACK);
-                    }else {
-                        componenet.setBackground(LBROWN);
-                        componenet.setForeground(Color.WHITE);
+
+                    }else { // one spaces
+                        componenet.setBackground(Color.BLACK);
+
                     }
 
+                    switch (columnIndex) {
+                        case 0:
+                        componenet.setBackground(LBROWN);
+                        componenet.setForeground(Color.WHITE);
+                        break;
+                        case 9:
+                        componenet.setBackground(LBROWN);
+                        componenet.setForeground(Color.WHITE);
+                        break;
+                    }
+                    switch (rowIndex) {
+                        case 0:
+                        componenet.setBackground(LBROWN);
+                        componenet.setForeground(Color.WHITE);
+                        break;
+                        case 9:
+                        componenet.setBackground(LBROWN);
+                        componenet.setForeground(Color.WHITE);
+                        break;
+                    }
                 }
-
                 return componenet;
             }
-
         }
 
         ;
@@ -105,6 +225,7 @@ public class BoardFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        BoardTable.setColumnSelectionAllowed(true);
         BoardTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BoardTable.setGridColor(new java.awt.Color(102, 102, 102));
         BoardTable.setName(""); // NOI18N
@@ -115,6 +236,16 @@ public class BoardFrame extends javax.swing.JFrame {
         BoardTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         BoardTable.setShowGrid(true);
         BoardTable.getTableHeader().setResizingAllowed(false);
+        BoardTable.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                BoardTableMouseMoved(evt);
+            }
+        });
+        BoardTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BoardTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(BoardTable);
         BoardTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (BoardTable.getColumnModel().getColumnCount() > 0) {
@@ -189,6 +320,29 @@ public class BoardFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ReturnButtonActionPerformed
 
+
+    private void BoardTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BoardTableMouseClicked
+        Point p = evt.getPoint();
+        int row = BoardTable.rowAtPoint(p);
+        int column = BoardTable.columnAtPoint(p);
+
+        // Click position
+        BoardPos pos = new BoardPos(column - 1, row - 1);
+
+        // Tell the board the piece was clicked
+        this.board.onClick(pos);
+
+        // Redraw the board in case something has changed
+        drawBoard();
+
+        System.out.print("clicked on table");
+    }//GEN-LAST:event_BoardTableMouseClicked
+
+    private void BoardTableMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BoardTableMouseMoved
+
+
+    }//GEN-LAST:event_BoardTableMouseMoved
+
     /**
      * @param args the command line arguments
      */
@@ -209,7 +363,7 @@ public class BoardFrame extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new BoardFrame());
     }

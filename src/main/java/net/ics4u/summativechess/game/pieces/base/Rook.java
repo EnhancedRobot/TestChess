@@ -15,32 +15,36 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public class Rook extends Piece {
+
     /*
      Creates a new piece with the given position and owner
      Post: New piece is created
-    */
+     */
     public Rook(BoardPos position, int owner) {
         super(position, owner);
-        
+
         // Set the rook's id to R
         id = "R";
+
+        // Set the image icon for the piece
+        setImage();
     }
-    
+
     /*
      Gets the places the piece can move to
      Post: Returns a list of every position the piece can move to
-    */
+     */
     @Override
     public List<Move> getMoves() {
         // The list of moves the rook has
         LinkedList<Move> moves = new LinkedList<>();
-        
+
         // For every direction the rook moves in
-        for(BoardPos dir : BoardPos.HORIZONTAL_VERTICAL) {
+        for (BoardPos dir : BoardPos.HORIZONTAL_VERTICAL) {
             // Move straight in that direction
             moveStraight(dir, moves);
         }
-        
+
         return moves;
     }
 }
