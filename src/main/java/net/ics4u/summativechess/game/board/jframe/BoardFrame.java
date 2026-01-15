@@ -104,7 +104,7 @@ public class BoardFrame extends javax.swing.JFrame {
                 abilityText.setVisible(true);
                 
                 // Set the piece's text to the ability description
-                abilityText.setText(((ActiveAbility) piece).getDescription());
+                abilityText.setText(((ActiveAbility) piece).getAbilityDescription());
                 
                 return;
             }
