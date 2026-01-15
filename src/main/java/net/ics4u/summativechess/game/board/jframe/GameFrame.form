@@ -32,8 +32,6 @@
               <EmptySpace min="-2" pref="208" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="Exit" min="-2" pref="189" max="-2" attributes="0"/>
-                  <Component id="GameViewer" min="-2" pref="189" max="-2" attributes="0"/>
-                  <Component id="ChangeVariation" min="-2" pref="189" max="-2" attributes="0"/>
                   <Component id="Play" min="-2" pref="189" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="203" max="32767" attributes="0"/>
@@ -47,13 +45,9 @@
               <Component id="Title" min="-2" pref="56" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="Play" min="-2" pref="47" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="ChangeVariation" min="-2" pref="47" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="GameViewer" min="-2" pref="47" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="Exit" min="-2" pref="47" max="-2" attributes="0"/>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="135" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,16 +69,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PlayActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="ChangeVariation">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Change Variation"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="GameViewer">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Game Viewer"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="Exit">
       <Properties>

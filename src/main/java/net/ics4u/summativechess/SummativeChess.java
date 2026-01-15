@@ -5,6 +5,7 @@
 package main.java.net.ics4u.summativechess;
 
 import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
+import main.java.net.ics4u.summativechess.game.board.jframe.GameFrame;
 
 
 /**
@@ -19,6 +20,6 @@ public class SummativeChess {
     */
     public static void main(String[] args) {
         // Start UI mode 
-        new BoardFrame();        
+        new GameFrame();        
     }
 }

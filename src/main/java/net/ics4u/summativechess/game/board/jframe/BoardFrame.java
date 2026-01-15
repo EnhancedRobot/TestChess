@@ -23,6 +23,9 @@ public class BoardFrame extends javax.swing.JFrame {
     public static final Color LBROWN = new Color(153, 102, 0); // Declare color brown
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BoardFrame.class.getName());
     private final Board board;
+    
+    // The menu
+    GameFrame menu;
 
     /**
      * Creates new form BoardFrame
@@ -32,6 +35,8 @@ public class BoardFrame extends javax.swing.JFrame {
 
         // To create a new board
         this.board = new Board(new ActiveVariations());
+        
+        board.ui = this;
 
         // Override the table cell renderers with a special image renderer
         for (int i = 0; i < 10; i++) {
@@ -374,7 +379,9 @@ public class BoardFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnButtonActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        menu.setVisible(true);
+        dispose();
     }//GEN-LAST:event_ReturnButtonActionPerformed
 
 
@@ -412,4 +419,12 @@ public class BoardFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
+
+    public void win(int winner) {
+        setVisible(false);
+        EndFrame frame = new EndFrame();
+        frame.menu = menu;
+        frame.win(winner);
+        dispose();
+    }
 }

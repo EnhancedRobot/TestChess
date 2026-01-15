@@ -7,6 +7,7 @@ package main.java.net.ics4u.summativechess.game.board;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.end.VictoryCondition;
 import main.java.net.ics4u.summativechess.game.end.VictoryState;
@@ -60,6 +61,9 @@ public class Board {
     
     // The active variations
     public ActiveVariations variations;
+    
+    
+    public BoardFrame ui;
     
     
     /* 
@@ -195,6 +199,8 @@ public class Board {
     */
     public void winGame(int winner) {
         System.out.println("We have a winner: " + winner + "!");
+        
+        ui.win(winner);
     }
     
     /* 
