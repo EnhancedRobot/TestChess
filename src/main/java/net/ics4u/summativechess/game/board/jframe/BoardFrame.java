@@ -57,6 +57,34 @@ public class BoardFrame extends javax.swing.JFrame {
                 drawAt(pos);
             }
         }
+        
+        // Create StringBuilders for the two captured pieces
+        StringBuilder whiteCaptured = new StringBuilder();
+        StringBuilder blackCaptured = new StringBuilder();
+        
+        // For every captured piece
+        for (Piece piece : board.capturedPieces) {
+            // If the piece is a white piece
+            if(piece.player == 0) {
+                // Add it to the black captured pieces
+                blackCaptured.append(piece.id).append(", ");                
+            } else {
+                // Otherwise add it to the white captured pieces
+                whiteCaptured.append(piece.id).append(", ");
+            }
+        }
+        
+        // Remove trailing ", "s
+        if(blackCaptured.length() > 0) {
+            blackCaptured.delete(blackCaptured.length()-2, blackCaptured.length());
+        }
+        if(whiteCaptured.length() > 0) {
+            whiteCaptured.delete(whiteCaptured.length()-2, whiteCaptured.length());
+        }
+        
+        // Set the captured pieces texrts
+        CapPieces2.setText(whiteCaptured.toString());
+        CapPieaces1.setText(blackCaptured.toString());
     }
 
     /*
