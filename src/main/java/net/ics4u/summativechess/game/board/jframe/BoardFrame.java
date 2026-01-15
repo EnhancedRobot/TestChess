@@ -368,6 +368,7 @@ public class BoardFrame extends javax.swing.JFrame {
         ReturnButton.addActionListener(this::ReturnButtonActionPerformed);
 
         activateAbilityButton.setText("Activate Ability!");
+        activateAbilityButton.addActionListener(this::activateAbilityButtonActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -446,6 +447,23 @@ public class BoardFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_BoardTableMouseMoved
+
+    private void activateAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateAbilityButtonActionPerformed
+        // Get the selected piece
+        Piece piece = board.getPiece(board.selectedPiece);
+        
+        // If the piece has an active ability
+        if(piece instanceof ActiveAbility ability) {
+            // Activate the ability
+            ability.activateAbility();
+            
+                
+            board.onClick(board.selectedPiece);
+            
+            // Redraw the board in case something changed 
+            drawBoard();
+        }
+    }//GEN-LAST:event_activateAbilityButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
