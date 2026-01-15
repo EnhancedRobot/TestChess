@@ -76,7 +76,7 @@ public class Example extends Piece implements ActiveAbility {
     }
 
     @Override
-    public String getDescription() {
+    public String getAbilityDescription() {
         return "Activate the ability to take this piece!";
     }
 }

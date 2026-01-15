@@ -101,7 +101,7 @@ public class CultPawn extends Pawn implements ActiveAbility {
     }
 
     @Override
-    public String getDescription() {
+    public String getAbilityDescription() {
         return "Activate after taking 2 pieces to move multiple squares again!";
     }
 }
