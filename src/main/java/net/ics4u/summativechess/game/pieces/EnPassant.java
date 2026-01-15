@@ -100,7 +100,8 @@ public class EnPassant {
         return false;
     }
     
+    @Override
     public String toString() {
-        return pieces[0].id + " on team " + team;
+        return "At " + location + " for " +  pieces[0].id + " on team " + team;
     }
 }

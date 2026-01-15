@@ -15,7 +15,7 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  */
 public class PawnDoubleForwardsMove extends Move {    
     // The pieces that can take the pawn in en passant
-    public static final String[] CAN_TAKE_EN_PASSANT = new String[]{"P"};
+    public static final String[] CAN_TAKE_EN_PASSANT = new String[]{"P", "PC"};
 
     /*
      Creates a new move
@@ -42,7 +42,7 @@ public class PawnDoubleForwardsMove extends Move {
         int distance = Math.max(Math.abs(moved.x), Math.abs(moved.y));
         
         // Go forwards until you reach the end, except the last tile
-        for(int i = 0; i < distance - 1; i++) {                
+        for(int i = 0; i < distance; i++) {                
             // Get the position to add to the en passant
             BoardPos enPassantPos = board.getFacingDirection(movingPiece.player).multiply(i).add(start);
                 

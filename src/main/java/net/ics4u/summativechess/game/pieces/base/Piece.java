@@ -242,7 +242,7 @@ public abstract class Piece {
         if (piece == null) {
             // Get the en passants for the square
             EnPassant enPassant = board.getEnPassant(pos);
-
+            
             // If there's no en passant on that square or the en passant can't be taken by the piece
             if (enPassant == null || !enPassant.canBeTaken(this)) {
                 // Return true if it doesn't require taking, otherwise return false

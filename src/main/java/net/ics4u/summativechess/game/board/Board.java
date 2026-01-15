@@ -261,7 +261,9 @@ public class Board {
      Post: All en passants are removed for given team 
     */
     public void removeEnPassantFor(int team) {
+        // For every en passant
         for (int i = 0; i < enPassantPieces.size(); i++) {
+            // If the en passant is from the given team
             if(enPassantPieces.get(i).team == team) {
                 // Remove the en passant from the list
                 enPassantPieces.remove(i);
@@ -490,7 +492,11 @@ public class Board {
             } 
         }
     }
+    /*
+     Gets a string representation of the pieces
     
+     Post: Returns a string representation of the tiles
+    */
     public String getPiecesString() {
         StringBuilder out = new StringBuilder();
         
@@ -614,7 +620,7 @@ public class Board {
                 
                 // Get the valid moves
                 validMoves = getPiece(pos).getMoves();
-
+                
                 return;
             }
         }
