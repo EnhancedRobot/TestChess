@@ -53,8 +53,6 @@ public class ActiveVariations {
         if(filePaths != null) {
             // Set the file path
             path = filePaths.get(random.nextInt(0, filePaths.size())).toString();
-            
-            System.out.println(path);
         }
     }
     

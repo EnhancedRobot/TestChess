@@ -68,9 +68,7 @@ public abstract class Piece {
         } else {
             fileName = fileName + "_b.png";
         }
-        
-        System.out.println(fileName);
-       
+               
         this.image = new ImageIcon("src/main/assets/images/" + fileName);
     }
 
