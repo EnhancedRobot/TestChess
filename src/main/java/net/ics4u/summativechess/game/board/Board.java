@@ -534,8 +534,11 @@ public class Board {
      Post: returns the move to a given position
     */
     public Move getMoveTo(BoardPos pos) {
+        // For every move in the list of valid moves
         for(Move move : validMoves) {
+            // If it is going to the given position
             if(move.end.equals(pos)) {
+                // Return it
                 return move;
             }
         }
@@ -555,10 +558,13 @@ public class Board {
             return;
         }
         
+        // Get the current player
         int currentPlayer = turn % numPlayers;
         
+        // Get the clicked piece
         Piece clickedPiece = getPiece(pos);
         
+        // If there was a piece on the tile and it's owned by the current player
         if(clickedPiece != null) {
             if(clickedPiece.player == currentPlayer) {
                 // Set the selected piece
