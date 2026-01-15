@@ -5,6 +5,7 @@ import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.table.*;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
 import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
@@ -67,28 +68,35 @@ public class BoardFrame extends javax.swing.JFrame {
         // Get the piece at this row and column position
         Piece piece = this.board.getPiece(pos);
         
+        // Get the tile at this row and column position        
+        Tile tile = this.board.getTile(pos);
+        
         // Create the stacked image for that tile
         StackedImage image = new StackedImage();
         
         // Set the image icons to be a new array (Array contains icon, selected, move)
-        image.icons = new ImageIcon[3];
+        image.icons = new ImageIcon[4];
+        
+        if(tile != null) {
+            image.icons[0] = tile.image;
+        }
         
         // If there is a piece on the tile
         if(piece != null) {
             // Add the piece image in slot 0
-            image.icons[0] = piece.image;
+            image.icons[1] = piece.image;
             
             // If the piece is the selected piece
             if(board.selectedPiece != null && board.selectedPiece.equals(piece.position)) {
                 // Add the select icon in slot 1
-                image.icons[1] = new ImageIcon("src/main/assets/images/base/select.png");
+                image.icons[2] = new ImageIcon("src/main/assets/images/base/select.png");
             }
         }
         
         // If the position is a valid move
         if(board.validMoves != null && board.getMoveTo(pos) != null) {
             // Add the move icon
-            image.icons[2] = new ImageIcon("src/main/assets/images/base/move.png");
+            image.icons[3] = new ImageIcon("src/main/assets/images/base/move.png");
         }
         
         // Set the image for the tile
