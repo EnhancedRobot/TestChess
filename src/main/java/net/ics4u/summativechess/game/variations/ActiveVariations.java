@@ -23,8 +23,8 @@ public class ActiveVariations {
     
     public ActiveVariations () {
         // Randomize the variants
-        //randomize();
-        test();
+        randomize();
+        //test();
     }
     
     public void test() {
