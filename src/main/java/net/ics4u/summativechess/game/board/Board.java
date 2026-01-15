@@ -549,6 +549,12 @@ public class Board {
      Post: Does movement and selection
     */
     public void onClick(BoardPos pos) {
+        // If the position is outside of the board
+        if(!isInBoard(pos)) {
+            // Stop
+            return;
+        }
+        
         int currentPlayer = turn % numPlayers;
         
         Piece clickedPiece = getPiece(pos);
