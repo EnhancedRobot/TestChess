@@ -27,8 +27,14 @@ public class Rock extends Piece {
         // Set the id to O
         id = "O";
         
+        // Set the image path
+        imagePath = "variations/rock/rock";        
+        
         // Set the piece to be non-takeable
         canBeTaken = false;
+        
+        // Set the image
+        setImage();
     }
 
     /*
