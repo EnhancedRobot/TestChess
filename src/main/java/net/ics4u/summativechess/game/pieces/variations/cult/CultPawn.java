@@ -100,6 +100,11 @@ public class CultPawn extends Pawn implements ActiveAbility {
         }
     }
 
+    /*
+     Gets the ability description
+    
+     Post: Returns a description of the ability
+    */
     @Override
     public String getAbilityDescription() {
         return "Activate after taking 2 pieces to move multiple squares again!";

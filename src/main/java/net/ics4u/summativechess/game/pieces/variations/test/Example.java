@@ -75,6 +75,11 @@ public class Example extends Piece implements ActiveAbility {
         board.takePieceAt(board.getFacingDirection(player).add(position));
     }
 
+    /*
+     Gets the ability description
+    
+     Post: Returns a description of the ability
+    */
     @Override
     public String getAbilityDescription() {
         return "Activate the ability to take this piece!";
