@@ -62,7 +62,9 @@ public class Move {
         }
         
         // Call onMove() for the moving piece
-        movingPiece.onMove(this);
+        if(!movingPiece.isTaken) {
+            movingPiece.onMove(this);
+        }
     }
     
     /*

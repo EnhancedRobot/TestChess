@@ -21,6 +21,8 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  * @author joshu
  */
 public abstract class Piece {
+    // Whether or not the piece is taken
+    public boolean isTaken = false;
 
     // Whether or not the piece can be taken by other pieces
     public boolean canBeTaken = true;
@@ -254,8 +256,13 @@ public abstract class Piece {
      Post: Piece is removed from the board and added to the list of taken pieces
      */
     public void take() {
+        // Set the piece to be taken
+        isTaken = true;
+        // Set the piece at the position to be null
         board.setPieceAt(position, null);
+        // Set the position to null
         position = null;
+        // Add this to the list of captured pieces
         board.capturedPieces.add(this);
     }
 

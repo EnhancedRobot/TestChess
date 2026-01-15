@@ -56,7 +56,7 @@ public abstract class Tile {
             case "M" -> {created = new MineTile();}
             default -> {
                 created = null;
-                System.out.println("Invalid piece: " + tileString + " at " + position.toString());
+                System.out.println("Invalid tile: " + tileString + " at " + position.toString());
             }
         }
         
