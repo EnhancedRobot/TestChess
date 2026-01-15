@@ -10,4 +10,5 @@ package main.java.net.ics4u.summativechess.game.pieces.base;
  */
 public interface ActiveAbility {
     void activateAbility();
+    public String getDescription();
 }

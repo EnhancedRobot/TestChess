@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.table.*;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
+import main.java.net.ics4u.summativechess.game.pieces.base.ActiveAbility;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
 import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
@@ -92,9 +93,26 @@ public class BoardFrame extends javax.swing.JFrame {
         CapPieaces1.setText(blackCaptured.toString());
         
         
+        // If there is a selected piece
         if(board.selectedPiece != null) {
-            
+            // Get the selected piece  
+            Piece piece = board.getPiece(board.selectedPiece);
+            // If the piece has an ability 
+            if(piece instanceof ActiveAbility) {
+                // Set ability UI to be visible
+                activateAbilityButton.setVisible(true);
+                abilityText.setVisible(true);
+                
+                // Set the piece's text to the ability description
+                abilityText.setText(((ActiveAbility) piece).getDescription());
+                
+                return;
+            }
         }
+        
+        // Set ability UI to be not visible if the piece doesn't have an ability
+        activateAbilityButton.setVisible(false);
+        abilityText.setVisible(false);
     }
 
     /*
