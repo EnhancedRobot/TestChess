@@ -62,8 +62,8 @@ public class ActiveVariations {
         }
     }
     
+    // The path to the board setup file currently in use
     public String path = BOARD_SETUPS_PATH + "Chess.board";
-
     
     // Whether or not pawns can always move forwards
     public boolean pawnsAlwaysMoveDouble = false;
