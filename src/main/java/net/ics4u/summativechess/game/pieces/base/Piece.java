@@ -76,12 +76,62 @@ public abstract class Piece {
      Gets the list of all places the piece can move to
      Post: Returns the list of piece the piece can move to
      */
-    public abstract List<Move> getMoves();
+    public List<Move> getMoves() {
+        // If the piece can teleport
+        if(canTeleport) {
+            // Return the list of teleport moves
+            return getTeleportMoves(new LinkedList<>());
+        }
+        
+        // Otherwise, return nothing
+        return new LinkedList<>();
+    }
 
     /*
      Called when the player moves
+    
+     Post: Handles on movement code
      */
     public void onMove(Move move) {
+    }
+    
+    /*
+     Called at the start of the player's turn
+    
+     Post: Resets everything for the turn
+    */
+    public void onTurnStart() {
+        // If it's the turn of the player that owns this piece
+        if(player == board.turn % board.numPlayers) {
+            // if the piece is shielded
+            if(hasShielded()) {
+            // Make it no longer shielded
+                setShielded(false);
+            }
+        }
+    }
+    /*
+     Called at the end of the player's turn
+    
+     Post: Resets everything for the turn
+    */
+    public void onTurnEnd() {
+        // if it isn't the turn of the piece, stop
+        if(player != board.turn % board.numPlayers) {
+            return;
+        }
+        
+        // If the piece can teleport
+        if(canTeleport()) {
+            // If the teleport started this turn
+            if(teleportStartedThisTurn) {
+                // Allow teleport to carry over to the next turn, so the player can use it
+                teleportStartedThisTurn = false;
+            } else {
+                // Set the piece to no longer be able to teleport
+                setCanTeleport(false);
+            }
+        }
     }
 
     /*
@@ -383,9 +433,24 @@ public abstract class Piece {
         return moveStraight(dir, out);
     }
     
+    public List<Move> getTeleportMoves(List<Move> out) {
+        for(int y = 0; y < board.pieces.length; y++) {
+            for(int x = 0; x < board.pieces[0].length; x++) {
+                BoardPos pos = new BoardPos(x,y);
+                
+                if(board.getPiece(pos) == null) {
+                    out.add(getMoveFor(pos));
+                }
+            }
+        }
+        
+        return out;
+    }
+    
     private boolean extraMove = false;
     private boolean shielded = false;
     private boolean canTeleport = false;
+    private boolean teleportStartedThisTurn = false;
     
     public void setExtraMove(boolean val){
         extraMove = val;
@@ -397,6 +462,10 @@ public abstract class Piece {
 
     public void setCanTeleport(boolean val){
         canTeleport = val;
+        // Set teleport started this turn
+        if(val) {
+            teleportStartedThisTurn = true;
+        }
     }
 
     public boolean hasExtraMove(){

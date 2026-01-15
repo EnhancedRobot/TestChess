@@ -47,7 +47,7 @@ public class Knight extends Piece {
     @Override
     public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<Move> moves = new LinkedList<>();
+        LinkedList<Move> moves = (LinkedList<Move>) super.getMoves();
 
         // For every position in moveable positions
         for (BoardPos pos : MOVEABLE_POSITIONS) {

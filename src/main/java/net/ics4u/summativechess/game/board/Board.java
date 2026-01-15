@@ -146,13 +146,23 @@ public class Board {
     
      Post: Turn is ended, and victory is checked
     */
-    public void endTurn() {
-        // Increment turn counter
-        turn += 1;
-        
+    public void endTurn() {        
         // Reset selected piece and valid moves
         selectedPiece = null;
         validMoves = null;
+        
+        // For every piece
+        for(Piece[] line : pieces) {
+            for(Piece piece : line) {
+                // Call on turn end
+                if(piece != null) {
+                    piece.onTurnEnd();
+                }
+            }
+        }
+
+        // Increment turn counter
+        turn += 1;
         
         // Check for a victory
         checkForVictory();
@@ -167,6 +177,16 @@ public class Board {
     public void startTurn() {
         // Get the current player
         int currentPlayer = turn % numPlayers;
+        
+        // For every piece
+        for(Piece[] line : pieces) {
+            for(Piece piece : line) {
+                // Call on turn start
+                if(piece != null) {
+                    piece.onTurnStart();
+                }
+            }
+        }
         
         // Remove all the en passants for that player
         removeEnPassantFor(currentPlayer);

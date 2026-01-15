@@ -5,6 +5,7 @@
 package main.java.net.ics4u.summativechess.game.pieces.variations.test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.pieces.base.ActiveAbility;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
@@ -36,7 +37,7 @@ public class Example extends Piece implements ActiveAbility {
     @Override
     public List<Move> getMoves() {
         // Create an ArrayList of moves
-        ArrayList<Move> moves = new ArrayList<>();
+        LinkedList<Move> moves = (LinkedList<Move>) super.getMoves();
         
         // Get the position in front of the piece to check to move to
         BoardPos pos = board.getFacingDirection(player).add(position);

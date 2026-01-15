@@ -6,6 +6,9 @@ package main.java.net.ics4u.summativechess.game.board.tiles;
 
 import javax.swing.ImageIcon;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.board.tiles.powerup.ExtraMovePowerup;
+import main.java.net.ics4u.summativechess.game.board.tiles.powerup.ShieldedPowerup;
+import main.java.net.ics4u.summativechess.game.board.tiles.powerup.TeleportPowerup;
 import main.java.net.ics4u.summativechess.game.pieces.base.Piece;
 import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
 import main.java.net.ics4u.summativechess.util.BoardPos;
@@ -54,10 +57,17 @@ public abstract class Tile {
         // Get the tile based on the given id
         switch(tileString) {
             case "M" -> {created = new MineTile();}
+            case "PT" -> {created = new TeleportPowerup();}
+            case "PM" -> {created = new ExtraMovePowerup();}
+            case "PS" -> {created = new ShieldedPowerup();}
             default -> {
                 created = null;
                 System.out.println("Invalid tile: " + tileString + " at " + position.toString());
             }
+        }
+        
+        if(created != null && !created.id.equals(tileString)) {
+            System.out.println("Invalid Tile: Id doesn't match! (" + tileString + " was input, got " + created.id + ")");
         }
         
         return created;

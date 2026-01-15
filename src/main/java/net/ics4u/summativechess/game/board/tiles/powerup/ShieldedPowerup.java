@@ -13,13 +13,13 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
  *
  * @author joshu
  */
-public class SheildedPowerup extends Tile {
+public class ShieldedPowerup extends Tile {
     private boolean used = false; 
 
-    public SheildedPowerup(BoardPos pos) {
+    public ShieldedPowerup() {
         super();
                 
-        this.id = "PM";
+        this.id = "PS";
     }
 
     public boolean isUsed() {

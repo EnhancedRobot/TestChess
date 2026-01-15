@@ -41,8 +41,7 @@ public class Pawn extends Piece {
     */
     public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<Move> moves = new LinkedList<>();
-        
+        LinkedList<Move> moves = (LinkedList<Move>) super.getMoves();        
         
         // Handle forwards movement
         // If the pawn can always move double or it's the first move for the pawn

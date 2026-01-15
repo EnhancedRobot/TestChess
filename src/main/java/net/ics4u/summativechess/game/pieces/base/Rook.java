@@ -40,7 +40,7 @@ public class Rook extends Piece {
     @Override
     public List<Move> getMoves() {
         // The list of moves the rook has
-        LinkedList<Move> moves = new LinkedList<>();
+        LinkedList<Move> moves = (LinkedList<Move>) super.getMoves();
 
         // For every direction the rook moves in
         for (BoardPos dir : BoardPos.HORIZONTAL_VERTICAL) {

@@ -62,7 +62,7 @@ public class CultPawn extends Pawn implements ActiveAbility {
     @Override
     public List<Move> getMoves() {
         // The list of places the piece can go to
-        LinkedList<Move> moves = new LinkedList<>();
+        LinkedList<Move> moves = (LinkedList<Move>) super.getMoves();
         
         
         // Handle forwards movement

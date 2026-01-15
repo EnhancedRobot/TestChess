@@ -23,12 +23,12 @@ public class ActiveVariations {
     
     public ActiveVariations () {
         // Randomize the variants
-        randomize();
-        //test();
+        //randomize();
+        test();
     }
     
     public void test() {
-        
+        path = BOARD_SETUPS_PATH + "Powerups.board";
     }
     
     public void randomize() {

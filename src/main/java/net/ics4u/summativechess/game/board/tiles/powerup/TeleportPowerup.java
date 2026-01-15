@@ -16,7 +16,7 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
 public class TeleportPowerup extends Tile {
     private boolean used = false; 
 
-    public TeleportPowerup(BoardPos pos) {
+    public TeleportPowerup() {
         super();
                 
         this.id = "PT";

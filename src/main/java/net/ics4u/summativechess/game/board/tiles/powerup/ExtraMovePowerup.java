@@ -16,7 +16,7 @@ import main.java.net.ics4u.summativechess.util.BoardPos;
 public class ExtraMovePowerup extends Tile {
     private boolean used = false; 
 
-    public ExtraMovePowerup(BoardPos pos) {
+    public ExtraMovePowerup() {
         super();
                 
         this.id = "PM";
