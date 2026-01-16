@@ -11,7 +11,7 @@ import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
-import main.java.net.ics4u.summativechess.game.pieces.variations.cult.CultPawn;
+import main.java.net.ics4u.summativechess.game.pieces.variations.cult.*;
 import main.java.net.ics4u.summativechess.game.pieces.variations.rock.Rock;
 import main.java.net.ics4u.summativechess.game.pieces.variations.test.Example;
 import main.java.net.ics4u.summativechess.util.BoardPos;
@@ -373,6 +373,17 @@ public abstract class Piece {
 
             case "PC" ->
                 created = new CultPawn(position, team);
+            case "BC" ->
+                created = new CultBishop(position, team);
+            case "KC" ->
+                created = new CultKing(position, team);
+            case "NC" ->
+                created = new CultKnight(position, team);
+            case "QC" ->
+                created = new CultQueen(position, team);
+            case "RC" ->
+                created = new CultRook(position, team);
+    
 
             case "Whatever" ->
                 created = new Example(position, team);
