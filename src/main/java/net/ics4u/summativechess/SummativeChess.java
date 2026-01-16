@@ -8,8 +8,10 @@ import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
 import main.java.net.ics4u.summativechess.game.board.jframe.GameFrame;
 
 
-/**
- *
+/** Programmers: Josh Salter, Omar Al-Zyoud, Connor Daly-Bouchard, Liam Haber, Winona Opoku 
+ * Date: 01/16/2026
+ * Program Name: TestChess
+ * Program Description: A game of chess with randomized variations
  * @author joshu
  */
 public class SummativeChess {
