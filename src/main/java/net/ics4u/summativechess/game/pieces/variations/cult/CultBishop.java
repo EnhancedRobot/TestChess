@@ -45,7 +45,6 @@ public class CultBishop extends Bishop implements ActiveAbility {
     */
     @Override
     public void activateAbility() {
-        System.out.println("Actiavted!" + killCount);
         // If the kill count is 2
         if(killCount >= 2) {
             // Reset it
@@ -115,6 +114,6 @@ public class CultBishop extends Bishop implements ActiveAbility {
     */
     @Override
     public String getAbilityDescription() {
-        return "Activate after taking 2 pieces it will be able to go left or right one once";
+        return "Activate after taking 2 pieces\nAllow movement left or right one square";
     }
 }

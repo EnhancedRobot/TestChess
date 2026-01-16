@@ -53,7 +53,6 @@ public class CultQueen extends Queen implements ActiveAbility {
     */
     @Override
     public void activateAbility() {
-        System.out.println("Actiavted!" + killCount);
         // If the kill count is 2
         if(killCount >= 2) {
             // Reset it
@@ -123,6 +122,6 @@ public class CultQueen extends Queen implements ActiveAbility {
     */
     @Override
     public String getAbilityDescription() {
-        return "Activate after taking 2 pieces to move multiple squares again!";
+        return "Activate after taking 2 pieces\nTeleport to any square, without taking!";
     }
 }

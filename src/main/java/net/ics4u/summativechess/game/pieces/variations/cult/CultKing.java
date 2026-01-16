@@ -48,7 +48,6 @@ public class CultKing extends King implements ActiveAbility {
     */
     @Override
     public void activateAbility() {
-        System.out.println("Actiavted!" + killCount);
         // If the kill count is 2
         if(killCount >= 2) {
             // Reset it
@@ -122,6 +121,6 @@ public class CultKing extends King implements ActiveAbility {
     */
     @Override
     public String getAbilityDescription() {
-        return "Activate after taking 2 pieces to move like a knight once";
+        return "Activate after taking 2 pieces\nMove like a knight";
     }
 }
