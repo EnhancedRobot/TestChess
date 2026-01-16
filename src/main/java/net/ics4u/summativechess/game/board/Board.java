@@ -35,6 +35,7 @@ public class Board {
     // The piece that is currently selected
     public BoardPos selectedPiece;
     
+    // The list of possible moves the selected piece could make
     public List<Move> validMoves;
     
     // The tiles on the board
@@ -43,6 +44,7 @@ public class Board {
     // Use getTile() or setTile() instead
     public Tile[][] tiles;
     
+    // The victory condition associated with this piece
     public VictoryCondition victoryCondition;
     
     // A list of the pieces that have been captured so far
@@ -58,11 +60,10 @@ public class Board {
     // Defaults to two for normal games
     public int numPlayers = 2;
     
-    
     // The active variations
     public ActiveVariations variations;
     
-    
+    // The UI associated with this board
     public BoardFrame ui;
     
     
