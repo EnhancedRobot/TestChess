@@ -28,7 +28,7 @@ public class ActiveVariations {
     }
     
     public void test() {
-        path = BOARD_SETUPS_PATH + "Powerups.board";
+
     }
     
     public void randomize() {
