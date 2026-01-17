@@ -47,7 +47,7 @@ public class BoardFrame extends javax.swing.JFrame {
         
         // Set the row height to 5
         BoardTable.setRowHeight(55);
-        for(int i = 0; i < size.y + 2; i++) {
+        for(int i = 0; i < size.x + 2; i++) {
             // Set column min and max width to 55 (setWidth broke, for some reason)
             BoardTable.getColumnModel().getColumn(i).setMaxWidth(55);
             BoardTable.getColumnModel().getColumn(i).setMinWidth(55);
@@ -79,9 +79,9 @@ public class BoardFrame extends javax.swing.JFrame {
     // Call method to sync visual board
     public void drawBoard() {
         // Loop over all 8 rows
-        for (int row = 0; row < size.y; row++) {
+        for (int row = 0; row < size.x; row++) {
             // Loop over all 8 columns
-            for (int column = 0; column < size.x; column++) {
+            for (int column = 0; column < size.y; column++) {
                 // Get the BoardPos at this row and column
                 BoardPos pos = new BoardPos(row, column);
 
