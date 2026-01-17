@@ -51,7 +51,7 @@ public class BoardFrame extends javax.swing.JFrame {
     }
 
     // Call method to sync visual board
-    private void drawBoard() {
+    public void drawBoard() {
         // Loop over all 8 rows
         for (int row = 0; row < 8; row++) {
             // Loop over all 8 columns
