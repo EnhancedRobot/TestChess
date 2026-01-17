@@ -20,6 +20,10 @@ public class EndFrame extends javax.swing.JFrame {
      */
     public EndFrame() {
         initComponents();
+        
+        //Center the UI
+        setLocationRelativeTo(null);
+        
         setVisible(true);
     }
     

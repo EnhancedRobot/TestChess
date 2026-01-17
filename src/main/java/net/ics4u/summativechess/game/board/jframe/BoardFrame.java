@@ -33,10 +33,14 @@ public class BoardFrame extends javax.swing.JFrame {
      */
     public BoardFrame() {
         initComponents();
+        
+        // Center the UI
+        setLocationRelativeTo(null);
 
         // To create a new board
         this.board = new Board(new ActiveVariations());
         
+        // Set the board's UI to this
         board.ui = this;
 
         // Override the table cell renderers with a special image renderer
@@ -47,6 +51,7 @@ public class BoardFrame extends javax.swing.JFrame {
         // Draw the initial board
         drawBoard();
 
+        // Make the UI visible
         setVisible(true);
     }
 
