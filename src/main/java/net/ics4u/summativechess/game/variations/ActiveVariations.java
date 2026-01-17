@@ -25,17 +25,28 @@ public class ActiveVariations {
     
     public ActiveVariations () {
         // Randomize the variants
-        randomize();
+        randomize(null);
         //test();
+    }
+    
+    public ActiveVariations (long seed) {
+        // Randomize the variants with the given seed
+        randomize(seed);
     }
     
     public void test() {
 
     }
     
-    public void randomize() {
+    public void randomize(Long seed) {
+        Random random;
+        
         // Create a new random
-        Random random = new Random();
+        if(seed == null) {
+            random = new Random();
+        } else {
+            random = new Random(seed);
+        }
         
         // Randomize boolean values
         pawnsAlwaysMoveDouble = random.nextBoolean();
