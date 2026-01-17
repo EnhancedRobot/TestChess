@@ -360,8 +360,6 @@ public class Board {
      Post: Board is set up for the game to start
     */
     public void setUpBoard(BoardPos boardSize, String piecesInput, String tilesInput) {
-        String victoryConditionString = "EveryRoyal";
-        
         // Remove all whitespace
         piecesInput = piecesInput.replaceAll("\\s+", "");
         tilesInput = tilesInput.replaceAll("\\s+", "");
@@ -403,7 +401,7 @@ public class Board {
         // Set up the tiles
         setUpTiles(new BoardPos(8,8), tilesString);
         
-        victoryCondition = VictoryCondition.getVictoryCondition(victoryConditionString);
+        victoryCondition = VictoryCondition.getVictoryCondition(variations.victoryCondition);
     }
     
     /*
