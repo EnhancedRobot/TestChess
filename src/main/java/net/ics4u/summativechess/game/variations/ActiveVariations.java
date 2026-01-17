@@ -25,17 +25,18 @@ public class ActiveVariations {
     
     public ActiveVariations () {
         // Randomize the variants
-        randomize(null);
-        //test();
+        //randomize(null);
+        test();
     }
     
     public ActiveVariations (long seed) {
         // Randomize the variants with the given seed
-        randomize(seed);
+        //randomize(seed);
+        test();
     }
     
     public void test() {
-
+        path = BOARD_SETUPS_PATH + "Test.board";
     }
     
     public void randomize(Long seed) {

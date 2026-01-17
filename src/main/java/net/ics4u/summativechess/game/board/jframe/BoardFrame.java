@@ -3,6 +3,7 @@ package main.java.net.ics4u.summativechess.game.board.jframe;
 import java.awt.*;
 import java.awt.Component;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.table.*;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
@@ -25,26 +26,35 @@ public class BoardFrame extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BoardFrame.class.getName());
     private final Board board;
     
+    // The size of the board
+    public BoardPos size;
+    
     // The menu
     GameFrame menu;
 
     /**
      * Creates new form BoardFrame
      */
-    public BoardFrame() {
-        initComponents();
-        
-        // Center the UI
-        setLocationRelativeTo(null);
-
+    public BoardFrame() {        
         // To create a new board
         this.board = new Board(new ActiveVariations());
+        
+        size = new BoardPos(board.pieces[0].length, board.pieces.length);
+        
+        System.out.println(size);
+        
+        initComponents();
+        
+        BoardTable.setRowHeight(75);
+
+        // Center the UI
+        setLocationRelativeTo(null);
         
         // Set the board's UI to this
         board.ui = this;
 
         // Override the table cell renderers with a special image renderer
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size.x + 2; i++) {
             BoardTable.getColumnModel().getColumn(i).setCellRenderer(new ImageCellRenderer());
         }
         
@@ -61,9 +71,9 @@ public class BoardFrame extends javax.swing.JFrame {
     // Call method to sync visual board
     public void drawBoard() {
         // Loop over all 8 rows
-        for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < size.y; row++) {
             // Loop over all 8 columns
-            for (int column = 0; column < 8; column++) {
+            for (int column = 0; column < size.x; column++) {
                 // Get the BoardPos at this row and column
                 BoardPos pos = new BoardPos(row, column);
 
@@ -247,7 +257,7 @@ public class BoardFrame extends javax.swing.JFrame {
                 pos.x = columnIndex;
                 pos.y = rowIndex;
 
-                if(columnIndex <= 10){
+                if(columnIndex <= size.x + 2){
 
                     if(colorCheckRender(pos)) // no space
                     {
@@ -258,25 +268,20 @@ public class BoardFrame extends javax.swing.JFrame {
 
                     }
 
-                    switch (columnIndex) {
-                        case 0:
+                    if(columnIndex == 0) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
-                        case 9:
+                    } else if(columnIndex == size.x + 1) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
                     }
-                    switch (rowIndex) {
-                        case 0:
+
+                    if(rowIndex == 0) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
-                        case 9:
+                    } else if(rowIndex == size.y + 1) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
                     }
                 }
                 return componenet;
@@ -299,31 +304,7 @@ public class BoardFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         BoardTable.setBackground(new java.awt.Color(153, 153, 153));
-        BoardTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "},
-                {"8", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"7", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"6", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"5", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"4", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"3", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"2", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"1", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"   ", "a", "b", "c", "d", "e", "f", "g", "h", "   "}
-            },
-            new String [] {
-                "", "", "", "", "", "", "", "", "", ""
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        BoardTable.setModel(getTableModel());
         BoardTable.setColumnSelectionAllowed(true);
         BoardTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BoardTable.setGridColor(new java.awt.Color(102, 102, 102));
@@ -348,17 +329,14 @@ public class BoardFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(BoardTable);
         BoardTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         if (BoardTable.getColumnModel().getColumnCount() > 0) {
-            BoardTable.getColumnModel().getColumn(0).setResizable(false);
-            BoardTable.getColumnModel().getColumn(1).setResizable(false);
-            BoardTable.getColumnModel().getColumn(2).setResizable(false);
-            BoardTable.getColumnModel().getColumn(3).setResizable(false);
-            BoardTable.getColumnModel().getColumn(4).setResizable(false);
-            BoardTable.getColumnModel().getColumn(5).setResizable(false);
-            BoardTable.getColumnModel().getColumn(6).setResizable(false);
-            BoardTable.getColumnModel().getColumn(7).setResizable(false);
-            BoardTable.getColumnModel().getColumn(8).setResizable(false);
-            BoardTable.getColumnModel().getColumn(9).setResizable(false);
+            for(int i = 0; i < size.y; i++) {
+                BoardTable.getColumnModel().getColumn(0).setResizable(false);
+                BoardTable.getColumnModel().getColumn(0).setWidth(55);
+            }
         }
+
+        BoardTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
         BoardTable.getAccessibleContext().setAccessibleName("");
         BoardTable.getAccessibleContext().setAccessibleDescription("");
 
@@ -477,6 +455,33 @@ public class BoardFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BoardTableMouseMoved
 
+    private TableModel getTableModel() {
+        Object[][] table = new Object [size.y + 2][size.y + 2];
+
+	for(int i = 0; i < size.y + 2; i++) {
+	    for(int j = 0; j < size.x + 2; j++) {
+		if(j == size.x + 1) {
+		    table[i][j] = "  ";
+		} else if(i == size.y + 1 && (j != 0 && j != size.x + 1)) {
+		    table[i][j] = (char)('A' + j - 1);
+		} else if(j == 0 && (i != 0 && i != size.y + 1)) {
+		    table[i][j] = ((Integer) (size.y + 1 - i)).toString();
+		} else {
+		    table[i][j] = "";
+		}
+	    }
+	}
+        
+        String[] strings = new String[size.x + 2]; 
+        for(int i = 0; i < size.x + 2; i++){
+            strings[i] = "";
+        } 
+        
+        TableModel tableModel = new javax.swing.table.DefaultTableModel(table, strings);
+        
+        return tableModel;
+    }
+    
     private void activateAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateAbilityButtonActionPerformed
         // Get the selected piece
         Piece piece = board.getPiece(board.selectedPiece);

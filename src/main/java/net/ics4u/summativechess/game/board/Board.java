@@ -386,7 +386,7 @@ public class Board {
         }
         
         // Set up the pieces
-        setUpPieces(new BoardPos(8,8), piecesString);
+        setUpPieces(boardSize, piecesString);
         
         
         // Create the pieces array
@@ -399,7 +399,7 @@ public class Board {
         }
         
         // Set up the tiles
-        setUpTiles(new BoardPos(8,8), tilesString);
+        setUpTiles(boardSize, tilesString);
         
         victoryCondition = VictoryCondition.getVictoryCondition(variations.victoryCondition);
     }
