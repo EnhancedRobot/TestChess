@@ -39,16 +39,19 @@ public class BoardFrame extends javax.swing.JFrame {
         // To create a new board
         this.board = new Board(new ActiveVariations());
         
+        // Get the board size
         size = new BoardPos(board.pieces[0].length, board.pieces.length);
         
-        System.out.println(size);
-        
+        // Initialize the UI
         initComponents();
         
+        // Set the row height to 5
         BoardTable.setRowHeight(55);
         for(int i = 0; i < size.y + 2; i++) {
+            // Set column min and max width to 55 (setWidth broke, for some reason)
             BoardTable.getColumnModel().getColumn(i).setMaxWidth(55);
             BoardTable.getColumnModel().getColumn(i).setMinWidth(55);
+            // Make the columns non-resizeable
             BoardTable.getColumnModel().getColumn(i).setResizable(false);
         }
 
@@ -451,30 +454,43 @@ public class BoardFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BoardTableMouseMoved
 
+    /*
+     Gets the table model
+    
+     Post: Retuns the table model
+    */
     private TableModel getTableModel() {
-        Object[][] table = new Object [size.y + 2][size.y + 2];
+        // Creates the table array
+        Object[][] table = new Object [size.y + 2][size.x + 2];
 
+        // For every row and column
 	for(int i = 0; i < size.y + 2; i++) {
 	    for(int j = 0; j < size.x + 2; j++) {
-		if(j == size.x + 1) {
-		    table[i][j] = "  ";
-		} else if(i == size.y + 1 && (j != 0 && j != size.x + 1)) {
+                // If going along the bottom row, set the tiles to have letters in them, excpt in the corners
+		if(i == size.y + 1 && (j != 0 && j != size.x + 1)) {
 		    table[i][j] = (char)('A' + j - 1);
+                
+                // While on the left column, set the tiles to have numbers
 		} else if(j == 0 && (i != 0 && i != size.y + 1)) {
 		    table[i][j] = ((Integer) (size.y + 1 - i)).toString();
+                
+                // Otherwise, set it to an empty string
 		} else {
 		    table[i][j] = "";
 		}
 	    }
 	}
         
+        // Create the strings as size + 2 new empty strings 
         String[] strings = new String[size.x + 2]; 
         for(int i = 0; i < size.x + 2; i++){
             strings[i] = "";
         } 
         
+        // Create the table model
         TableModel tableModel = new javax.swing.table.DefaultTableModel(table, strings);
         
+        // Return the table model
         return tableModel;
     }
     
