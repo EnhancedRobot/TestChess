@@ -69,6 +69,9 @@ public class BoardFrame extends javax.swing.JFrame {
         // Center the UI
         setLocationRelativeTo(null);
         
+        // Hide the Board's scroll pane's border, to make it look better
+        jScrollPane1.setBorder(null);
+        
         // Set the board's UI to this
         board.ui = this;
 
