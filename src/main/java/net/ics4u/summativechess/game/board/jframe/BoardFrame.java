@@ -2,6 +2,17 @@ package main.java.net.ics4u.summativechess.game.board.jframe;
 
 import java.awt.*;
 import java.awt.Component;
+// ===============================
+// Omar's Work: imports for Save/Load shortcuts + dialogs
+// ===============================
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import main.java.net.ics4u.summativechess.game.board.GameHistoryIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.*;
@@ -72,8 +83,16 @@ public class BoardFrame extends javax.swing.JFrame {
         // Draw the initial board
         drawBoard();
 
+        // =======================================================
+        // Omar's Work (Intermediate):
+        // Show move history in the UI and enable save/load shortcuts
+        // =======================================================
+        updateMoveListUI();
+        setupSaveLoadShortcuts();
+
         // Make the UI visible
         setVisible(true);
+
     }
 
     // Call method to sync visual board
@@ -308,6 +327,8 @@ public class BoardFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         victoryConditionText = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        MoveListArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -367,6 +388,11 @@ public class BoardFrame extends javax.swing.JFrame {
 
         jLabel1.setText("To win:");
 
+        MoveListArea.setEditable(false);
+        MoveListArea.setColumns(20);
+        MoveListArea.setRows(5);
+        jScrollPane5.setViewportView(MoveListArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -380,33 +406,38 @@ public class BoardFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                     .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane2)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(55, 55, 55)
-                            .addComponent(activateAbilityButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane6))
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane6)
+                    .addComponent(jScrollPane5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(55, 55, 55)
+                                .addComponent(activateAbilityButton))
+                            .addComponent(jLabel1))
+                        .addGap(80, 80, 80)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
+                        .addGap(16, 16, 16)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(activateAbilityButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(230, 230, 230)
+                        .addGap(27, 27, 27)
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,6 +474,8 @@ public class BoardFrame extends javax.swing.JFrame {
 
         // Redraw the board in case something has changed
         drawBoard();
+        updateMoveListUI();
+
 
         //System.out.print("clicked on table");
     }//GEN-LAST:event_BoardTableMouseClicked
@@ -514,12 +547,92 @@ public class BoardFrame extends javax.swing.JFrame {
             drawBoard();
         }
     }//GEN-LAST:event_activateAbilityButtonActionPerformed
+// =======================================================
+// Omar's Work (Intermediate):
+// Updates the MoveListArea with the contents of board.moveHistory.
+// This makes move history visible to the teacher during the demo.
+// =======================================================
+
+    private void updateMoveListUI() {
+        if (MoveListArea == null) {
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        // Print each move on its own line with numbering
+        for (int i = 0; i < board.moveHistory.size(); i++) {
+            sb.append(i + 1).append(". ").append(board.moveHistory.get(i)).append("\n");
+        }
+
+        MoveListArea.setText(sb.toString());
+    }
+
+// =======================================================
+// Omar's Work (Intermediate):
+// Keyboard shortcuts for saving/loading without editing GUI builder code.
+// Ctrl+S -> saves to savegame.txt
+// Ctrl+L -> loads from savegame.txt
+// =======================================================
+    private void setupSaveLoadShortcuts() {
+        JComponent root = getRootPane();
+
+        // ---- CTRL+S (SAVE) ----
+        root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK), "SAVE_GAME");
+
+        root.getActionMap().put("SAVE_GAME", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    GameHistoryIO.saveGame(board, "savegame.txt");
+                    JOptionPane.showMessageDialog(BoardFrame.this,
+                            "Saved to savegame.txt",
+                            "Save Successful",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(BoardFrame.this,
+                            "Save failed: " + ex.getMessage(),
+                            "Save Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        // ---- CTRL+L (LOAD) ----
+        root.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+                .put(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK), "LOAD_GAME");
+
+        root.getActionMap().put("LOAD_GAME", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    GameHistoryIO.loadGame(board, "savegame.txt");
+
+                    // After loading, redraw and refresh history UI
+                    drawBoard();
+                    updateMoveListUI();
+
+                    JOptionPane.showMessageDialog(BoardFrame.this,
+                            "Loaded from savegame.txt",
+                            "Load Successful",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(BoardFrame.this,
+                            "Load failed: " + ex.getMessage(),
+                            "Load Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JTable BoardTable;
     private javax.swing.JTextArea CapPieaces1;
     private javax.swing.JTextArea CapPieces2;
+    private javax.swing.JTextArea MoveListArea;
     private javax.swing.JButton ReturnButton;
     private javax.swing.JTextArea abilityText;
     private javax.swing.JButton activateAbilityButton;
@@ -528,6 +641,7 @@ public class BoardFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTextArea victoryConditionText;
     // End of variables declaration//GEN-END:variables

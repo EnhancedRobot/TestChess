@@ -4,6 +4,7 @@
  */
 package main.java.net.ics4u.summativechess.game.board;
 
+import main.java.net.ics4u.summativechess.game.board.GameHistoryIO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,9 @@ public class Board {
     // The current turn
     // Turn 0 is the first white turn, 1 is the first black turn, etc
     public int turn = 0;
-    
+    // Stores a running list of moves made during the game
+    public List<String> moveHistory = new ArrayList<>();
+
     // The pieces in the board
     // Access with [y][x]
     // Preferably don't though, unless you have to
@@ -594,6 +597,25 @@ public class Board {
     }
     
     /*
+ Records a move into moveHistory in a simple readable format.
+ Example: "0,6->0,4 PawnDoubleForwardsMove"
+     */
+    private void recordMove(BoardPos from, BoardPos to, Move move) {
+        if (from == null || to == null || move == null) {
+            return;
+        }
+
+        String entry
+                = from.x + "," + from.y
+                + "->"
+                + to.x + "," + to.y
+                + " "
+                + move.getClass().getSimpleName();
+
+        moveHistory.add(entry);
+    }
+
+    /*
      Handles a click at a given position
     
      Post: Does movement and selection
@@ -629,16 +651,32 @@ public class Board {
             Move move = getMoveTo(pos);
             
             // If there is a move to the tile
-            if(move != null) {
+            if (move != null) {
+
+                // Save "from" before the move (selectedPiece gets cleared on endTurn)
+                BoardPos from = selectedPiece;
+                BoardPos to = pos;
+
                 // Do the move
                 move.doMove();
-                
+
+                // Record the move in memory
+                recordMove(from, to, move);
+
                 // End the old player's turn
                 endTurn();
-                
+
                 // Start the next player's turn
                 startTurn();
+
+                // Auto-write a snapshot after every completed move
+                try {
+                    GameHistoryIO.appendTurnSnapshot(this, "gamehistory.txt");
+                } catch (IOException ex) {
+                    System.out.println("Could not write gamehistory.txt: " + ex.getMessage());
+                }
             }
+
         }
     }
 }
