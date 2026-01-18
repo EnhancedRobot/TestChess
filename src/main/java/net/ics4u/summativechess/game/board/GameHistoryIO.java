@@ -142,9 +142,9 @@ public class GameHistoryIO {
         frame.drawBoard();
     }
     /*
- Appends a snapshot of the current board state to a history file.
- This runs after each completed move so history is always recorded.
- File: gamehistory.txt
+        Appends a snapshot of the current board state to a history file.
+        This runs after each completed move so history is always recorded.
+        File: gamehistory.txt
      */
     public static void appendTurnSnapshot(Board board, String filePath) throws IOException {
         List<String> out = new ArrayList<>();
