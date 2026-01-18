@@ -22,6 +22,6 @@ public class TestChess {
     */
     public static void main(String[] args) {
         // Start UI mode 
-        new GameFrame();        
+        new GameFrame().setVisible(true);        
     }
 }

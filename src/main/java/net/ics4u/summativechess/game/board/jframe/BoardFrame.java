@@ -41,14 +41,13 @@ public class BoardFrame extends javax.swing.JFrame {
     public BoardPos size;
     
     // The menu
-    GameFrame menu;
+    public GameFrame menu;
 
     /**
      * Creates new form BoardFrame
      */
-    public BoardFrame() {        
-        // To create a new board
-        this.board = new Board(new ActiveVariations());
+    public BoardFrame(Board board) {
+        this.board = board;
         
         // Get the board size
         size = new BoardPos(board.pieces[0].length, board.pieces.length);
@@ -96,6 +95,13 @@ public class BoardFrame extends javax.swing.JFrame {
         // Make the UI visible
         setVisible(true);
 
+    }
+    
+    /**
+     * Creates new form BoardFrame for a new board
+     */
+    public BoardFrame() {
+        this(new Board(new ActiveVariations()));
     }
 
     // Call method to sync visual board
@@ -610,7 +616,8 @@ public class BoardFrame extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    GameHistoryIO.loadGame(board, "savegame.txt");
+                    GameHistoryIO.loadGame("savegame.txt");
+                    close();
 
                     // After loading, redraw and refresh history UI
                     drawBoard();
@@ -654,6 +661,11 @@ public class BoardFrame extends javax.swing.JFrame {
         EndFrame frame = new EndFrame();
         frame.menu = menu;
         frame.win(winner);
+        dispose();
+    }
+    
+    public void close() {
+        setVisible(false);
         dispose();
     }
 }

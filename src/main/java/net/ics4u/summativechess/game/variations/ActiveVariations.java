@@ -23,6 +23,8 @@ public class ActiveVariations {
     // The path to the board setups
     public static final String BOARD_SETUPS_PATH = "assets/boardsetups/";
     
+    public long seed;
+    
     public ActiveVariations () {
         // Randomize the variants
         randomize(null);
@@ -39,15 +41,17 @@ public class ActiveVariations {
 
     }
     
-    public void randomize(Long seed) {
-        Random random;
-        
+    public void randomize(Long seed) {        
         // Create a new random
         if(seed == null) {
-            random = new Random();
-        } else {
-            random = new Random(seed);
+            seed = System.nanoTime();   
         }
+        
+        // Create a new random
+        Random random = new Random(seed);
+
+        // Set seed
+        this.seed = seed;
         
         // Randomize boolean values
         pawnsAlwaysMoveDouble = random.nextBoolean();

@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import main.java.net.ics4u.summativechess.game.board.jframe.BoardFrame;
+import main.java.net.ics4u.summativechess.game.board.jframe.GameFrame;
+import main.java.net.ics4u.summativechess.game.variations.ActiveVariations;
 import main.java.net.ics4u.summativechess.util.BoardPos;
 
 /**
@@ -26,6 +29,10 @@ public class GameHistoryIO {
 
         // File header
         out.add("# SummativeChess Save File");
+        
+        // Random seed
+        out.add("SEED");
+        out.add(String.valueOf(board.variations.seed));
 
         // Save turn number
         out.add("TURN");
@@ -59,7 +66,7 @@ public class GameHistoryIO {
     /*
      Loads a saved game state and move history from a file.
      */
-    public static void loadGame(Board board, String filePath) throws IOException {
+    public static void loadGame(String filePath) throws IOException {
         List<String> lines = Files.readAllLines(Path.of(filePath), StandardCharsets.UTF_8);
 
         // Remove empty lines
@@ -75,6 +82,7 @@ public class GameHistoryIO {
         }
 
         // Find section markers
+        int seedIndex = indexOfLine(cleaned, "SEED");
         int turnIndex = indexOfLine(cleaned, "TURN");
         int sizeIndex = indexOfLine(cleaned, "SIZE");
         int piecesIndex = indexOfLine(cleaned, "PIECES");
@@ -82,9 +90,18 @@ public class GameHistoryIO {
         int historyIndex = indexOfLine(cleaned, "HISTORY");
         
         // Make sure all required sections exist
-        if (turnIndex == -1 || sizeIndex == -1 || piecesIndex == -1 || tilesIndex == -1 || historyIndex == -1) {
+        if (seedIndex == -1 || turnIndex == -1 || sizeIndex == -1 || piecesIndex == -1 || tilesIndex == -1 || historyIndex == -1) {
             throw new IllegalArgumentException("Save file is missing required sections.");
         }
+        
+        // Get the seed
+        long seed = Long.parseLong(cleaned.get(seedIndex + 1).trim());
+        
+        Board board = new Board(new ActiveVariations(seed));
+        
+        BoardFrame frame = new BoardFrame(board);
+        
+        frame.menu = new GameFrame();
 
         // Load turn
         board.turn = Integer.parseInt(cleaned.get(turnIndex + 1).trim());
@@ -120,6 +137,9 @@ public class GameHistoryIO {
         // Restore move history
         board.moveHistory.clear();
         board.moveHistory.addAll(historyLines);
+        
+        // Redraw board
+        frame.drawBoard();
     }
     /*
  Appends a snapshot of the current board state to a history file.

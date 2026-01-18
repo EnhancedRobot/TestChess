@@ -22,8 +22,6 @@ public class GameFrame extends javax.swing.JFrame {
         
         // Center the UI
         setLocationRelativeTo(null);
-        
-        setVisible(true);
     }
 
     /**
