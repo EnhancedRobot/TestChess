@@ -75,10 +75,14 @@ public class EnPassant {
     public void take() {
         // For every piece
         for(Piece piece : pieces) {
-            // Take that piece
-            piece.take();
+            // If the piece isn't already taken
+            if(!piece.isTaken) {
+                // Take that piece
+                piece.take();
+            }
         }
         
+        // Remove this from the list of en passants
         board.enPassantPieces.remove(this);
     }
     

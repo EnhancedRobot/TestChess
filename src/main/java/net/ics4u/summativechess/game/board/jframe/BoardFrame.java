@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import main.java.net.ics4u.summativechess.game.board.GameHistoryIO;
 import javax.swing.ImageIcon;
+import javax.swing.JTable;
 import javax.swing.table.*;
 import main.java.net.ics4u.summativechess.game.board.Board;
 import main.java.net.ics4u.summativechess.game.board.tiles.Tile;
@@ -36,45 +37,70 @@ public class BoardFrame extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BoardFrame.class.getName());
     private final Board board;
     
+    // The size of the board
+    public BoardPos size;
+    
     // The menu
     GameFrame menu;
 
     /**
      * Creates new form BoardFrame
      */
-    public BoardFrame() {
-        initComponents();
-
+    public BoardFrame() {        
         // To create a new board
         this.board = new Board(new ActiveVariations());
         
+        // Get the board size
+        size = new BoardPos(board.pieces[0].length, board.pieces.length);
+        
+        // Initialize the UI
+        initComponents();
+        
+        // Set the row height to 5
+        BoardTable.setRowHeight(55);
+        for(int i = 0; i < size.x + 2; i++) {
+            // Set column min and max width to 55 (setWidth broke, for some reason)
+            BoardTable.getColumnModel().getColumn(i).setMaxWidth(55);
+            BoardTable.getColumnModel().getColumn(i).setMinWidth(55);
+            // Make the columns non-resizeable
+            BoardTable.getColumnModel().getColumn(i).setResizable(false);
+        }
+
+        // Center the UI
+        setLocationRelativeTo(null);
+        
+        // Set the board's UI to this
         board.ui = this;
 
         // Override the table cell renderers with a special image renderer
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < size.x + 2; i++) {
             BoardTable.getColumnModel().getColumn(i).setCellRenderer(new ImageCellRenderer());
         }
+        
+        // Set the victory condition text to be the victory condition description
+        victoryConditionText.setText(board.victoryCondition.getDescription());
 
         // Draw the initial board
         drawBoard();
 
-// =======================================================
-// Omar's Work (Intermediate):
-// Show move history in the UI and enable save/load shortcuts
-// =======================================================
+        // =======================================================
+        // Omar's Work (Intermediate):
+        // Show move history in the UI and enable save/load shortcuts
+        // =======================================================
         updateMoveListUI();
         setupSaveLoadShortcuts();
 
+        // Make the UI visible
         setVisible(true);
 
     }
 
     // Call method to sync visual board
-    private void drawBoard() {
+    public void drawBoard() {
         // Loop over all 8 rows
-        for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < size.x; row++) {
             // Loop over all 8 columns
-            for (int column = 0; column < 8; column++) {
+            for (int column = 0; column < size.y; column++) {
                 // Get the BoardPos at this row and column
                 BoardPos pos = new BoardPos(row, column);
 
@@ -258,7 +284,7 @@ public class BoardFrame extends javax.swing.JFrame {
                 pos.x = columnIndex;
                 pos.y = rowIndex;
 
-                if(columnIndex <= 10){
+                if(columnIndex <= size.x + 2){
 
                     if(colorCheckRender(pos)) // no space
                     {
@@ -269,25 +295,20 @@ public class BoardFrame extends javax.swing.JFrame {
 
                     }
 
-                    switch (columnIndex) {
-                        case 0:
+                    if(columnIndex == 0) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
-                        case 9:
+                    } else if(columnIndex == size.x + 1) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
                     }
-                    switch (rowIndex) {
-                        case 0:
+
+                    if(rowIndex == 0) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
-                        case 9:
+                    } else if(rowIndex == size.y + 1) {
                         componenet.setBackground(LBROWN);
                         componenet.setForeground(Color.WHITE);
-                        break;
                     }
                 }
                 return componenet;
@@ -305,35 +326,15 @@ public class BoardFrame extends javax.swing.JFrame {
         activateAbilityButton = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         abilityText = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        victoryConditionText = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         BoardTable.setBackground(new java.awt.Color(153, 153, 153));
-        BoardTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "},
-                {"8", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"7", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"6", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"5", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"4", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"3", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"2", " ", "", " ", "", " ", "", " ", "", "   "},
-                {"1", "", " ", "", " ", "", " ", "", " ", "   "},
-                {"   ", "a", "b", "c", "d", "e", "f", "g", "h", "   "}
-            },
-            new String [] {
-                "", "", "", "", "", "", "", "", "", ""
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        BoardTable.setModel(getTableModel());
+        BoardTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         BoardTable.setColumnSelectionAllowed(true);
         BoardTable.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BoardTable.setGridColor(new java.awt.Color(102, 102, 102));
@@ -356,19 +357,6 @@ public class BoardFrame extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(BoardTable);
-        BoardTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        if (BoardTable.getColumnModel().getColumnCount() > 0) {
-            BoardTable.getColumnModel().getColumn(0).setResizable(false);
-            BoardTable.getColumnModel().getColumn(1).setResizable(false);
-            BoardTable.getColumnModel().getColumn(2).setResizable(false);
-            BoardTable.getColumnModel().getColumn(3).setResizable(false);
-            BoardTable.getColumnModel().getColumn(4).setResizable(false);
-            BoardTable.getColumnModel().getColumn(5).setResizable(false);
-            BoardTable.getColumnModel().getColumn(6).setResizable(false);
-            BoardTable.getColumnModel().getColumn(7).setResizable(false);
-            BoardTable.getColumnModel().getColumn(8).setResizable(false);
-            BoardTable.getColumnModel().getColumn(9).setResizable(false);
-        }
         BoardTable.getAccessibleContext().setAccessibleName("");
         BoardTable.getAccessibleContext().setAccessibleDescription("");
 
@@ -397,6 +385,13 @@ public class BoardFrame extends javax.swing.JFrame {
         abilityText.setRows(5);
         jScrollPane6.setViewportView(abilityText);
 
+        victoryConditionText.setEditable(false);
+        victoryConditionText.setColumns(20);
+        victoryConditionText.setRows(5);
+        jScrollPane2.setViewportView(victoryConditionText);
+
+        jLabel1.setText("To win:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -404,51 +399,58 @@ public class BoardFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ReturnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(activateAbilityButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(abilityText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
-                        .addGap(27, 27, 27))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addComponent(activateAbilityButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane6))
+                    .addComponent(jLabel1))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)
+                        .addGap(160, 160, 160)
                         .addComponent(activateAbilityButton)
-                        .addGap(1, 1, 1)
-                        .addComponent(abilityText, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(230, 230, 230)
+                        .addComponent(jLabel1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnButtonActionPerformed
+        // Make this invisible
         setVisible(false);
+        
+        // Set the menu to be visible
         menu.setVisible(true);
+        
+        // Delete this
         dispose();
     }//GEN-LAST:event_ReturnButtonActionPerformed
 
@@ -477,6 +479,52 @@ public class BoardFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_BoardTableMouseMoved
 
+    /*
+     Gets the table model
+    
+     Post: Retuns the table model
+    */
+    private TableModel getTableModel() {
+        // Creates the table array
+        Object[][] table = new Object [size.y + 2][size.x + 2];
+
+        // For every row and column
+	for(int i = 0; i < size.y + 2; i++) {
+	    for(int j = 0; j < size.x + 2; j++) {
+                // If going along the bottom row, set the tiles to have letters in them, excpt in the corners
+		if(i == size.y + 1 && (j != 0 && j != size.x + 1)) {
+		    table[i][j] = (char)('A' + j - 1);
+                
+                // While on the left column, set the tiles to have numbers
+		} else if(j == 0 && (i != 0 && i != size.y + 1)) {
+		    table[i][j] = ((Integer) (size.y + 1 - i)).toString();
+                
+                // Otherwise, set it to an empty string
+		} else {
+		    table[i][j] = "";
+		}
+	    }
+	}
+        
+        // Create the strings as size + 2 new empty strings 
+        String[] strings = new String[size.x + 2]; 
+        for(int i = 0; i < size.x + 2; i++){
+            strings[i] = "";
+        } 
+        
+        // Create the table model
+        TableModel tableModel = new javax.swing.table.DefaultTableModel(table, strings) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+               //all cells are not editable
+               return false;
+            }
+        };
+        
+        // Return the table model
+        return tableModel;
+    }
+    
     private void activateAbilityButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_activateAbilityButtonActionPerformed
         // Get the selected piece
         Piece piece = board.getPiece(board.selectedPiece);
@@ -486,7 +534,7 @@ public class BoardFrame extends javax.swing.JFrame {
             // Activate the ability
             ability.activateAbility();
             
-                
+            // Click the tile to reload its moves
             board.onClick(board.selectedPiece);
             
             // Redraw the board in case something changed 
@@ -582,10 +630,13 @@ public class BoardFrame extends javax.swing.JFrame {
     private javax.swing.JButton ReturnButton;
     private javax.swing.JLabel abilityText;
     private javax.swing.JButton activateAbilityButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTextArea victoryConditionText;
     // End of variables declaration//GEN-END:variables
 
     public void win(int winner) {

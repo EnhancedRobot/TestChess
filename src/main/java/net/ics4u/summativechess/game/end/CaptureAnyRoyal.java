@@ -41,4 +41,14 @@ public class CaptureAnyRoyal extends VictoryCondition {
         
         return new VictoryState(hasLost);
     }
+
+    /*
+     Get the description string of this victory condition
+    
+     Post: Returns the description 
+    */
+    @Override
+    public String getDescription() {
+        return "Capture any king to win!";
+    }
 }

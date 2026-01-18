@@ -19,6 +19,13 @@ public abstract class VictoryCondition {
     public abstract VictoryState isEnded(Board board);
     
     /*
+     Get the description string of this victory condition
+    
+     Post: Returns the description 
+    */
+    public abstract String getDescription();
+    
+    /*
      Gets the vicotry condition based on a given victory condition id
      Post: Returns a new victory condition, or null if there is no victory condition with that id 
     */

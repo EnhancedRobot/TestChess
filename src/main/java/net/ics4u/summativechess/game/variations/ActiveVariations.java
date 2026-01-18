@@ -25,7 +25,13 @@ public class ActiveVariations {
     
     public ActiveVariations () {
         // Randomize the variants
-        randomize();
+        randomize(null);
+        //test();
+    }
+    
+    public ActiveVariations (long seed) {
+        // Randomize the variants with the given seed
+        randomize(seed);
         //test();
     }
     
@@ -33,9 +39,15 @@ public class ActiveVariations {
 
     }
     
-    public void randomize() {
+    public void randomize(Long seed) {
+        Random random;
+        
         // Create a new random
-        Random random = new Random();
+        if(seed == null) {
+            random = new Random();
+        } else {
+            random = new Random(seed);
+        }
         
         // Randomize boolean values
         pawnsAlwaysMoveDouble = random.nextBoolean();
@@ -66,6 +78,9 @@ public class ActiveVariations {
     
     // The path to the board setup file currently in use
     public String path = BOARD_SETUPS_PATH + "Chess.board";
+    
+    // The victory condition to use
+    public String victoryCondition = "AnyRoyal";
     
     // Whether or not pawns can always move forwards
     public boolean pawnsAlwaysMoveDouble = false;

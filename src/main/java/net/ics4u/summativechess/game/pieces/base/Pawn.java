@@ -7,6 +7,7 @@ package main.java.net.ics4u.summativechess.game.pieces.base;
 import java.util.LinkedList;
 import java.util.List;
 import main.java.net.ics4u.summativechess.game.board.Board;
+import main.java.net.ics4u.summativechess.game.board.jframe.PromotePopup;
 import main.java.net.ics4u.summativechess.game.pieces.EnPassant;
 import main.java.net.ics4u.summativechess.game.pieces.moves.Move;
 import main.java.net.ics4u.summativechess.game.pieces.moves.PawnDoubleForwardsMove;
@@ -87,7 +88,7 @@ public class Pawn extends Piece {
         // Get the position to check
         BoardPos check = new BoardPos(position);
         
-        for(int i = 0; i < board.variations.pawnFirstTurnMoveDistance; i++) {
+        for(int i = 0; i < board.variations.pawnFirstTurnMoveDistance - 1; i++) {
             // Step forwards once in the facing direction of the player
             check.add(board.getFacingDirection(player));
 
@@ -183,10 +184,31 @@ public class Pawn extends Piece {
         // Only to queen for now while we wait for UI
             
         // Create a new Queen
-        Queen queen = new Queen(position, player);
-
-
-        // Set the piece on the tile to be a queen
-        board.setPieceAt(position, queen);
+        PromotePopup popup = new PromotePopup(board.ui, false);
+        
+        // Set the popup's piece to be this
+        popup.piece = this;
+        
+        // Show the popup
+        popup.setVisible(true);
+    }
+    
+    /*
+     Sets the piece at the position
+     Used in promotion code
+    
+     Post: Piece is set and the pawn is taken 
+    */
+    public void set(Piece piece) {
+        // Store the position
+        BoardPos pos = this.position;
+        
+        // Take this piece
+        take();
+        
+        // Set the piece at the position
+        board.setPieceAt(pos, piece);
+        
+        board.ui.drawBoard();
     }
 }
