@@ -155,12 +155,13 @@ public class GameHistoryIO {
                 java.nio.file.StandardOpenOption.APPEND
         );
     }
-
-private static int indexOfLine(List<String> lines, String target) {
-    for (int i = 0; i < lines.size(); i++) {
-        if (lines.get(i).trim().equalsIgnoreCase(target)) {
-            return i;
+    
+    private static int indexOfLine(List<String> lines, String target) {
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i).trim().equalsIgnoreCase(target)) {
+                return i;
+            }
         }
+        return -1;
     }
-    return -1;
 }
