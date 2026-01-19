@@ -182,14 +182,16 @@ public class BoardFrame extends javax.swing.JFrame {
         
         // Get the tile at this row and column position        
         Tile tile = this.board.getTile(pos);
-        
+                
         // Create the stacked image for that tile
         StackedImage image = new StackedImage();
         
         // Set the image icons to be a new array (Array contains icon, selected, move)
         image.icons = new ImageIcon[4];
         
-        if(tile != null) {
+        // If the tile isn't null
+        if(tile != null) {    
+            // Add the tile icon to the pool of images to draw
             image.icons[0] = tile.image;
         }
         
